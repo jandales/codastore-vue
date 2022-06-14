@@ -6,6 +6,7 @@ import Header from './components/Header.vue'
 import Hero from './components/Hero.vue'
 import Collection from './components/Collection.vue'
 import FeatureProduct from './components/FeatureProduct.vue';
+import Footer from './components/Footer.vue';
 
 </script>
 
@@ -14,6 +15,7 @@ import FeatureProduct from './components/FeatureProduct.vue';
   <Hero></Hero>
   <Collection></Collection>
   <FeatureProduct></FeatureProduct>
+  <Footer></Footer>
 </template>
 
 <style>

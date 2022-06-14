@@ -29,8 +29,8 @@ export default {
 
 <template>
     <div class="bg-white">
-        <div class="container px-4 md:mx-auto">
-            <div class="flex items-center justify-between md:py-4">               
+        <div class="container px-4 md:mx-auto lg:px-0">
+            <div class="flex items-center justify-between  h-32">               
                 <div class="flex items-center gap-4">
                      <span class="md:hidden" @click="toggleMenu">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
