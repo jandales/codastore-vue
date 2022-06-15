@@ -1,15 +1,4 @@
-
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import '@splidejs/vue-splide/css';
 @import '@splidejs/vue-splide/css/skyblue';
 @import '@splidejs/vue-splide/css/sea-green';
 @import '@splidejs/vue-splide/css/core';
-
-.alert {
-    @apply bg-red-500 !important;
-  }
- 

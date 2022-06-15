@@ -27,7 +27,7 @@
     <div class="container px-4 md:mx-auto lg:px-0">
     <div class="block text-center">        
         <div class="mb-16  mt-16 md:mt-0">
-            <hi class="text-[2rem]">Featured Product</hi>
+            <h1 class="text-[2rem]">Featured Product</h1>
         </div> 
 
         <div class="flex flex-wrap  gap-4 md:gap-8 mb-8">        
@@ -35,11 +35,11 @@
                <a href="#">
                     <div class="relative  overflow-hidden">
                         <img :src="`/src/assets/img/${item.img}`"                   
-                        class="object-cover full-width transition ease-in-out  hover:scale-110  duration-300"    alt=""/>
+                        class="full-width transition ease-in-out  hover:scale-110  duration-300"    alt=""/>
                     </div>
                     <div class="flex justify-between  p-4 bg-white z-10">
                         <div>
-                            <label  class="block capitalize  text-[1rem] text-black tracking-widest font-bold ">{{ item.name }}</label>
+                            <label  class="block capitalize  text-[1rem] text-black tracking-widest font-bold hover:underline">{{ item.name }}</label>
                             <label  class="block capitalize text-[1rem] text-slate-500 tracking-widest font-semibold">{{ item.name }}</label>
                         </div>
                         <div class="flex justify-center items-center">
