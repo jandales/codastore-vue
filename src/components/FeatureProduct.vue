@@ -26,32 +26,32 @@
 <template>
     <div class="container px-4 md:mx-auto lg:px-0">
     <div class="block text-center">        
-        <div class="mb-16  mt-16 md:mt-0">
-            <h1 class="text-[2rem]">Featured Product</h1>
-        </div> 
+       
+            <h1 class="page-heading">Featured Product</h1>
+      
 
-        <div class="flex flex-wrap  gap-4 md:gap-8 mb-8">        
-            <div v-for="(item, index)  in collections" class="w-[calc(((100%_+_1rem)_/_2)_-_1rem)] md:w-[calc(((100%_+_2rem)_/_3)_-_2rem)] lg:w-[calc(((100%_+_2rem)_/_4)_-_2rem)]  border rounded-sm shadow-md">
-               <a href="#">
+        <div class="flex flex-wrap gap-4">        
+            <div v-for="(item, index)  in collections" class="product-width box-border">
+               <router-link to="/collections/tshirt/product1">
                     <div class="relative  overflow-hidden">
                         <img :src="`/src/assets/img/${item.img}`"                   
                         class="full-width transition ease-in-out  hover:scale-110  duration-300"    alt=""/>
                     </div>
-                    <div class="flex justify-between  p-4 bg-white z-10">
+                    <div class="flex justify-between py-4">
                         <div>
-                            <label  class="block capitalize  text-[1rem] text-black tracking-widest font-bold hover:underline">{{ item.name }}</label>
-                            <label  class="block capitalize text-[1rem] text-slate-500 tracking-widest font-semibold">{{ item.name }}</label>
+                            <label  class="block capitalize  text-sm text-black tracking-wide font-bold hover:underline">{{ item.name }}</label>
+                            <label  class="block capitalize text-sm text-slate-500 tracking-wide font-semibold">{{ item.name }}</label>
                         </div>
                         <div class="flex justify-center items-center">
-                            <span class="capitalize text-black font-bold">{{ "$500" }}</span>
+                            <span class="capitalize text-sm text-black font-bold">{{ "$500" }}</span>
                         </div>
                     </div>
-               </a>
+               </router-link>
             </div>           
         </div>
 
-        <div>
-             <a href="#" class=" inline-block mt-4 py-4 px-8 bg-black text-white tracking-widest"> View All</a>
+        <div class="p-8  md:mb-12">
+             <a href="#" class=" inline-block  py-2 px-8 bg-black text-white tracking-widest"> View All</a>
         </div>
        
     </div>

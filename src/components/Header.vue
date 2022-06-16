@@ -1,28 +1,34 @@
 <script>
+import Hero from '../components/Hero.vue'
+import HeroVue from './Hero.vue'
 export default {
-  data() {
-    return {
-        navigations : [
-            { name : 'home' , url : '/' },
-            { name : 'shop', url : '/shop'},
-            { name : 'contact', url : '/contact'},
-            { name : 'about', url : '/about' },          
-        ]
-    }
-  },  
-  methods: {
-    toggleMenu() {
-       
-        const listNavWrapper = document.getElementById('list-nav-wrapper');
-        if (listNavWrapper.classList.contains('left-[-80%]')) {
-            listNavWrapper.classList.remove('left-[-80%]')
-            listNavWrapper.classList.add('left-[0]')
-            return;
-        }
-        listNavWrapper.classList.remove('left-[0]')
-        listNavWrapper.classList.add('left-[-80%]') 
-    }
-  }
+    data() {
+        return {
+            navigations: [
+                { name: "home", url: "/" },
+                { name: "shop", url: "/shop" },
+                { name: "contact", url: "/contact" },
+                { name: "about", url: "/about" },
+            ],
+            isHomePage : this.isHomePage = this.$route.name == 'home' ? true : false
+         
+        };
+    },
+    methods: {
+        toggleMenu() {
+            const listNavWrapper = document.getElementById("list-nav-wrapper");
+            if (listNavWrapper.classList.contains("left-[-80%]")) {
+                listNavWrapper.classList.remove("left-[-80%]");
+                listNavWrapper.classList.add("left-[0]");
+                return;
+            }
+            listNavWrapper.classList.remove("left-[0]");
+            listNavWrapper.classList.add("left-[-80%]");
+        },
+    }, 
+    
+      
+    components: { HeroVue }
 }
 
 
@@ -30,9 +36,13 @@ export default {
 </script>
 
 <template>
-    <div class="bg-white">
-        <div class="container px-4 md:mx-auto lg:px-0">
-            <div class="flex items-center justify-between  h-32">               
+
+    <div class="bg-white" :class="{ 'isHome' : isHomePage }"> 
+
+        <div class="container relative px-4 md:mx-auto lg:px-0" :class="{'min-h-screen' : isHomePage}">
+            <!--Navigation-->
+        
+            <div class="flex items-center justify-between">               
                 <div class="flex items-center gap-4">
                      <span class="md:hidden" @click="toggleMenu">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -41,7 +51,7 @@ export default {
                     </span>
                     <img src="../assets/logo.png"  height="100" width="100" alt="">
                     <ul id="list-nav-wrapper" class="absolute top-0  left-[-80%] h-screen w-[80%] bg-white flex flex-col gap-4  items-start p-8
-                               md:flex md:flex-row md:relative md:h-auto md:bg-transparent md:left-0
+                               md:flex md:flex-row md:relative md:h-auto md:bg-transparent md:left-0 z-10
                                ">
                         <div class="flex justify-between items-center w-full
                                     md:hidden">
@@ -52,6 +62,7 @@ export default {
                                 </svg>
                             </span>
                         </div>
+                        
                         <li class="w-full" v-for='nav in navigations'>
                                 <a :href="nav.url" class="block md:text-xs font-semibold text-left uppercase tracking-widest text-gray-500">{{ nav.name }}</a>
                         </li>
@@ -78,11 +89,16 @@ export default {
                     </span>
                </div>
             </div>
+
+            <!-- hero Image-->
+            <div v-if="isHomePage" class="flex flex-col items-center justify-center absolute top-[50%] w-full translate-y-[-50%]">
+                <h1 class="text-white text-[3rem] md:text-[4rem]">Wear your Best Moments</h1>
+                <a href="#" class="font-semibold tracking-wide px-8 py-4 mt-8  rounded-sm bg-white text-slate-500 shadow-sm hover:text-slate-400">START SHOPPING NOW</a>
+            </div>
         </div>
         
     </div>
 </template>
-
 
 
 

@@ -4,12 +4,39 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '@splidejs/vue-splide/css';
-@import '@splidejs/vue-splide/css/skyblue';
-@import '@splidejs/vue-splide/css/sea-green';
-@import '@splidejs/vue-splide/css/core';
 
 .alert {
     @apply bg-red-500 !important;
-  }
+}
+
+.isHome {
+  @apply bg-[url("./assets/background2.jpg")] bg-cover min-h-screen;
+}
+
+.btn-shop{
+  @apply py-4 px-8 text-slate-600 tracking-widest font-semibold uppercase hover:underline;
+}
+
+.collectoion-w-3{
+    @apply  w-[calc(((100%_+_1rem)_/_3)_-_1rem)];
+}
+
+.collectoion-w-4{
+    @apply w-[calc(((100%_+_2rem)_/_4)_-_2rem)];
+}
+
+.collectoion-width{
+  @apply  w-[calc(((100%_+_1rem)_/_2)_-_1rem)] md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)];
+}
+
+.product-width{
+   @apply w-[calc(((100%_+_1rem)_/_2)_-_1rem)] md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] lg:w-[calc(((100%_+_1rem)_/_4)_-_1rem)]
+}
+
+.page-heading{
+  @apply text-base md:text-[2rem] p-8 md:p-16;
+}
+input {
+  @apply outline-none;
+}
  

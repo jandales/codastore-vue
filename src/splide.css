@@ -2,3 +2,12 @@
 @import '@splidejs/vue-splide/css/skyblue';
 @import '@splidejs/vue-splide/css/sea-green';
 @import '@splidejs/vue-splide/css/core';
+
+
+.splide{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+.splide__pagination {
+    margin-top: 2rem !important;
+}
