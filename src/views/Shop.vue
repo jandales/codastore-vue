@@ -1,4 +1,8 @@
-<script></script>
+<script setup>
+    import ProductList from "../components/ProductList.vue";
+</script>
 <template>
-    <h1>Shop</h1>
+    <div class="container md:mx-auto">        
+        <ProductList></ProductList>
+    </div>
 </template>

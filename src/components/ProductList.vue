@@ -24,9 +24,35 @@
     }
 </script>
 <template>
-    <div class="container px-4 md:mx-auto lg:px-0">
-    <div class="block text-center">               
-            <h1 class="page-heading text-left">Featured Product</h1>
+  
+   <div class="block py-14">
+            <h1 class="block text-left text-xl uppercase">ALL COLLECTIONS</h1>
+   </div>
+   <div class="flex">
+            <ul class="flex gap-4">
+                <li><a href="#" class="text-sm hover:underline" >Collection 1</a></li>
+                <li><a href="#" class="text-sm hover:underline">Collection 2</a></li>
+                <li><a href="#" class="text-sm hover:underline">Collection 3</a></li>
+                <li><a href="#" class="text-sm hover:underline">Collection 4</a></li>
+            </ul>
+            <div class="flex justify-center items-center ml-auto">
+                <span class="text-sm">Sort By :</span>
+                <div class="flex">            
+                    <select name="sort_by" class="pr-6 text-sm" id="SortBy">
+                        <option value="manual" selected="selected">Featured</option>
+                        <option value="best-selling">Best selling</option>
+                        <option value="title-ascending">Alphabetically, A-Z</option>
+                        <option value="title-descending">Alphabetically, Z-A</option>
+                        <option value="price-ascending">Price, low to high</option>
+                        <option value="price-descending">Price, high to low</option>
+                        <option value="created-ascending">Date, old to new</option>
+                        <option value="created-descending">Date, new to old</option>
+                    </select>                  
+                </div>
+                <ul></ul>
+            </div>
+   </div>
+   <div class="block mt-8">    
         <div class="flex flex-wrap gap-4">        
             <div v-for="(item, index)  in collections" class="product-width box-border">
                <router-link to="/collections/tshirt/product1">
@@ -46,11 +72,6 @@
                </router-link>
             </div>           
         </div>
-
-        <div class="p-8  md:mb-12">
-             <a href="#" class=" inline-block  py-2 px-8 bg-black text-white tracking-widest"> View All</a>
-        </div>
-       
-    </div>
-    </div>  
+   </div>
+   
 </template>

@@ -18,7 +18,7 @@
                     </Textarea> 
                 </div>  
 
-                <button class="bg-black box-border text-white  font-bold tracking-widest inline py-3 px-10  w-full md:w-max" >Send</button> 
+                <button class="btn" >Send</button> 
                 <br>
             </div>   
            </div> 
