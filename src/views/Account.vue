@@ -2,11 +2,15 @@
     <div class="container md:mx-auto">
         <div class="flex md:mt-8">           
             <div class="account-sidebar">
-                <div class="hidden md:flex md:flex-col md:justify-center mb-4">
-                    <div class="relative rounded-full w-20 h-20 bg-[#f5f5f5] overflow-hidden mx-auto mb-2">
+                <div class="hidden md:flex gap-4 px-4 py-4">
+                    <div class="relative rounded-full w-16 h-16 bg-[#f5f5f5] overflow-hidden">
                         <img src="../assets/avatar.jpg" alt="">
                     </div>
-                    <router-link to="/" class="hover:underline text-center">View Profile</router-link>
+                    <div class="flex flex-col  justify-center">
+                        <label for="" class="font-semibold">Jesus Andales</label>
+                         <router-link to="/" class="text-sm hover:underline">Edit Profile</router-link>
+                    </div>
+                   
                 </div>
                  <router-link  to="/" class="hover:bg-[#f4f4f4] underline-offset-2" >
                     <div class="account-nav-item md:hidden">
