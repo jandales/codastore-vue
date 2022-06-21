@@ -3,6 +3,7 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import Header from "./components/Header.vue";
 import Footer from './components/Footer.vue';
+import CartModal from './components/CartModal.vue';  
 
 </script>
 
@@ -11,7 +12,7 @@ import Footer from './components/Footer.vue';
         <Header></Header>
         <router-view></router-view>
         <Footer></Footer>
-      
+        <CartModal></CartModal>
 </template>
 
 <style>

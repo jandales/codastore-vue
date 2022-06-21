@@ -47,9 +47,13 @@
             </div>
             <div class="basis-6/12">
                 <div class="block">
-                    <h1 class="block mb-2 text-theme font-semibold tracking-wildest mt-4 md:mt-0">Product Name</h1>
-                    <ul>
-                        <li></li>
+                    <h1 class="block text-theme font-semibold tracking-wildest mt-4 md:mt-0 mb-2">Product Name</h1>
+                    <ul class="flex gap-2 mb-2">
+                        <li><font-awesome-icon icon="fa-solid fa-star" color="#ff523b" /></li>
+                        <li><font-awesome-icon icon="fa-regular fa-star"  color="#ff523b" /></li>
+                        <li><font-awesome-icon icon="fa-regular fa-star"  color="#ff523b" /></li>
+                        <li><font-awesome-icon icon="fa-regular fa-star"  color="#ff523b" /></li>
+                        <li><font-awesome-icon icon="fa-regular fa-star"  color="#ff523b" /></li>
                     </ul>
                     <span class="block mb-2 text-theme ">$50.00</span>
                     <p class="block mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>

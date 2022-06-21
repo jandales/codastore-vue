@@ -15,6 +15,8 @@ module.exports = {
         'accent': "var(--accent)",
         'theme' : "var(--theme)",
         'lightGray' : '#f5f5f5',
+        'light' : "#777",
+        'dark' : '#333',
       },
       backgroundImage: {
       

@@ -1,6 +1,4 @@
-<script>
-    import ProductList from "../components/ProductList.vue";
-</script>
+
 <template>
    <div class="block  px-4 py-8   md:px-16 md:py-10">
     <div class="">
@@ -54,15 +52,15 @@
             <p class="mt text-sm">Your email address will not be published.</p>
        </div>
        <div class="block mt-8">
-           <div class="flex">
+           <div class="flex items-center">
                 <h4 class="text-[#333] font-semibold">Your Rating</h4>
-                <ul id="rating" class="flex items-center gap-2 ml-1">
-                    <li class="rate" rate="1"><i class="far fa-star" aria-hidden="true">*</i></li>
-                    <li class="rate" rate="2"><i class="far fa-star" aria-hidden="true">*</i></li>
-                    <li class="rate" rate="3"><i class="far fa-star" aria-hidden="true">*</i></li>
-                    <li class="rate" rate="4"><i class="far fa-star" aria-hidden="true">*</i></li>
-                    <li class="rate" rate="5"><i class="far fa-star" aria-hidden="true">*</i></li>
-                </ul>                                        
+                     <ul class="flex items-center justify-center  gap-2   ml-4">
+                        <li><font-awesome-icon icon="fa-solid fa-star" color="#ff523b" /></li>
+                        <li><font-awesome-icon icon="fa-regular fa-star"  color="#ff523b" /></li>
+                        <li><font-awesome-icon icon="fa-regular fa-star"  color="#ff523b" /></li>
+                        <li><font-awesome-icon icon="fa-regular fa-star"  color="#ff523b" /></li>
+                        <li><font-awesome-icon icon="fa-regular fa-star"  color="#ff523b" /></li>
+                    </ul>                                       
            </div>
            <div class="block mt8">
                 <div method="POST">                           
@@ -77,6 +75,6 @@
        </div>
     </div>
 
-    <ProductList></ProductList>
+ 
 </div>
 </template>
