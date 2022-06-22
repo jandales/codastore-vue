@@ -90,5 +90,14 @@ table tr td {
 .container {
   @apply p-4 md:p-0;
 }
+.product-item {
+  @apply product-width box-border;
+}
+.product-item .name {
+  @apply block capitalize  text-sm text-black tracking-wide font-bold hover:underline;
+}
+.product-item .collection {
+  @apply block capitalize text-sm tracking-wide pt-1;
+}
 
  

@@ -2,25 +2,15 @@
     export default {
         data() {
             return {
-                collections : [
-                    { name : 'jacket', img : 'collection1.webp'  },
-                    { name : 'Tshirt', img : 'collection2.webp' },
-                    { name : 'other', img : 'collection3.webp' }, 
-                    { name : 'jacket', img : 'collection1.webp'  },
-                    { name : 'Tshirt', img : 'collection2.webp' },
-                    { name : 'other', img : 'collection3.webp' }, 
-                    { name : 'jacket', img : 'collection1.webp'  },
-                    { name : 'Tshirt', img : 'collection2.webp' },
-                    { name : 'other', img : 'collection3.webp' }, 
-                    { name : 'jacket', img : 'collection1.webp'  },
-                    { name : 'Tshirt', img : 'collection2.webp' },
-                    { name : 'other', img : 'collection3.webp' }, 
-                    { name : 'jacket', img : 'collection1.webp'  },
-                    { name : 'Tshirt', img : 'collection2.webp' },
-                    { name : 'other', img : 'collection3.webp' },              
-                ]
+                apiBase : 'http://127.0.0.1:8000', 
+                products : [],
             }
-        },  
+        },            
+        mounted() {
+                this.axios
+                .get('http://127.0.0.1:8000/api/v1/products/featured/limit=12')
+                .then(response => {  this.products = response.data });                                 
+        }
     }
 </script>
 <template>
@@ -28,16 +18,16 @@
     <div class="block text-center">               
             <h1 class="page-heading text-left">Featured Product</h1>
         <div class="flex flex-wrap gap-4">        
-            <div v-for="(item, index)  in collections" class="product-width box-border">
+            <div v-for="(item, index)  in products" class="product-width box-border">
                <router-link to="/collections/tshirt/product1">
-                    <div class="relative  overflow-hidden">
-                        <img :src="`/src/assets/img/${item.img}`"                   
-                        class="full-width transition ease-in-out  hover:scale-110  duration-300"    alt=""/>
+                    <div class="relative  overflow-hidden">                
+                            <img :src="apiBase+item.imagePath"                                      
+                        class="full-width transition ease-in-out  hover:scale-110  duration-300"  alt=""/>
                     </div>
                     <div class="flex justify-between py-4">
                         <div>
-                            <label  class="block capitalize  text-sm text-black tracking-wide font-bold hover:underline">{{ item.name }}</label>
-                            <label  class="block capitalize text-sm text-slate-500 tracking-wide font-semibold">{{ item.name }}</label>
+                            <label  class="block capitalize text-sm text-left text-black tracking-wide font-bold hover:underline">{{ item.name }}</label>
+                            <label  class="block capitalize text-sm text-left text-slate-500 tracking-wide font-semibold">{{ item.category.name }}</label>
                         </div>
                         <div class="flex justify-center items-center">
                             <span class="capitalize text-sm text-black font-bold">{{ "$500" }}</span>

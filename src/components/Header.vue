@@ -6,7 +6,7 @@ export default {
         return {
             navigations: [
                 { name: "home", url: "/" },
-                { name: "shop", url: "/shop" },
+                { name: "shop", url: "/shop/collection/all" },
                 { name: "contact", url: "/contact" },
                 { name: "about", url: "/about" },
             ],

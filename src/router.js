@@ -27,7 +27,7 @@ const router = createRouter({
         { 
             path: '/shop',
 
-            name : 'shop',
+            name : 'shop/collection',
 
             component : Shop,
         }, 
@@ -80,7 +80,15 @@ const router = createRouter({
             name : 'account',
 
             component : Account,
-        }    
+        },
+        {
+            path : '/shop/collection/:filter',
+
+            name : 'shop.collection',
+
+            component : Shop
+        }  
+
     ]
 
 })

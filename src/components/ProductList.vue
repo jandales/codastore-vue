@@ -1,39 +1,46 @@
 <script>
     export default {
+        props: {
+            filter : String
+        },
         data() {
             return {
-                collections : [
-                    { name : 'jacket', img : 'collection1.webp'  },
-                    { name : 'Tshirt', img : 'collection2.webp' },
-                    { name : 'other', img : 'collection3.webp' }, 
-                    { name : 'jacket', img : 'collection1.webp'  },
-                    { name : 'Tshirt', img : 'collection2.webp' },
-                    { name : 'other', img : 'collection3.webp' }, 
-                    { name : 'jacket', img : 'collection1.webp'  },
-                    { name : 'Tshirt', img : 'collection2.webp' },
-                    { name : 'other', img : 'collection3.webp' }, 
-                    { name : 'jacket', img : 'collection1.webp'  },
-                    { name : 'Tshirt', img : 'collection2.webp' },
-                    { name : 'other', img : 'collection3.webp' }, 
-                    { name : 'jacket', img : 'collection1.webp'  },
-                    { name : 'Tshirt', img : 'collection2.webp' },
-                    { name : 'other', img : 'collection3.webp' },              
-                ]
+                apiBase : 'http://127.0.0.1:8000', 
+                products : null,
+                collection : null,
             }
-        },  
+        },
+        methods : {
+            getCollection() {
+                 this.axios
+                .get('http://127.0.0.1:8000/api/v1/collection')
+                .then(response => {  this.collection = response.data.collection });    
+            },
+            getProducts(filter){         
+                 this.axios
+                .get(`http://127.0.0.1:8000/api/v1/products/collection/${filter}`)
+                .then(response => {  this.products = response.data.products.data });  
+            }
+        },
+        mounted() {
+            this.getCollection();
+            this.getProducts(this.filter);
+        },
+       
+        
     }
 </script>
 <template>
   
    <div class="block py-14">
-            <h1 class="block text-left text-xl uppercase">ALL COLLECTIONS</h1>
+            <h1 class="block text-left text-xl uppercase">{{filter == 'all' || null ? 'All Collection' : filter }}</h1>
    </div>
    <div class="flex">
             <ul class="flex gap-4">
-                <li><a href="#" class="text-sm hover:underline" >Collection 1</a></li>
-                <li><a href="#" class="text-sm hover:underline">Collection 2</a></li>
-                <li><a href="#" class="text-sm hover:underline">Collection 3</a></li>
-                <li><a href="#" class="text-sm hover:underline">Collection 4</a></li>
+                <li><router-link  to="/shop/collection/all" class="text-sm capitalize hover:underline">All Collection</router-link></li>
+                <li v-for="item in collection" :key="item.id"><router-link :to="`/shop/collection/${item.name}`" @click="getProducts(item.name)" class="text-sm capitalize hover:underline" >{{item.name}} </router-link></li>
+
+                
             </ul>
             <div class="flex justify-center items-center ml-auto">
                 <span class="text-sm">Sort By :</span>
@@ -54,19 +61,19 @@
    </div>
    <div class="block mt-8">    
         <div class="flex flex-wrap gap-4">        
-            <div v-for="(item, index)  in collections" class="product-width box-border">
+            <div v-for="item in products" class="product-item">
                <router-link to="/collections/tshirt/product1">
                     <div class="relative  overflow-hidden">
-                        <img :src="`/src/assets/img/${item.img}`"                   
+                        <img :src="apiBase+item.imagePath"                   
                         class="full-width transition ease-in-out  hover:scale-110  duration-300"    alt=""/>
                     </div>
                     <div class="flex justify-between py-4">
                         <div>
-                            <label  class="block capitalize  text-sm text-black tracking-wide font-bold hover:underline">{{ item.name }}</label>
-                            <label  class="block capitalize text-sm text-slate-500 tracking-wide font-semibold">{{ item.name }}</label>
+                            <label  class="name">{{ item.name }}</label>
+                            <label  class="collection">{{ item.category.name }}</label>
                         </div>
                         <div class="flex justify-center items-center">
-                            <span class="capitalize text-sm text-black font-bold">{{ "$500" }}</span>
+                            <span class="capitalize text-sm text-black font-bold">{{ item.regular_price }}</span>
                         </div>
                     </div>
                </router-link>
