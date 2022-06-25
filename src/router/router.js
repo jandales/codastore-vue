@@ -1,15 +1,15 @@
 
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Home from './views/Home.vue'
-import Shop from './views/Shop.vue'
-import Contact from './views/Contact.vue'
-import ShowProduct from './views/ShowProduct.vue'
-import Cart from './views/Cart.vue'
-import Login from './views/Login.vue'
-import Register from './views/Register.vue'
-import ForgotPassword from './views/ForgotPassword.vue'
-import Account from './views/Account.vue'
+import Home from '../views/Home.vue'
+import Shop from '../views/Shop.vue'
+import Contact from '../views/Contact.vue'
+import ShowProduct from '../views/ShowProduct.vue'
+import Cart from '../views/Cart.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
+import ForgotPassword from '../views/ForgotPassword.vue'
+import Account from '../views/Account.vue'
 
 const router = createRouter({
 
@@ -24,15 +24,27 @@ const router = createRouter({
             component : Home,
         },  
         
-        { 
-            path: '/shop',
+   
 
-            name : 'shop/collection',
+        {
+            path : '/shop/collection/:name',
+
+            name : 'shop.collection.name',
 
             component : Shop,
-        }, 
+        },
+
+        {
+            path : '/shop/collection/:name/sort-by=:keyword',
+
+            name : 'shop.collection.sort',
+
+            component : Shop,
+        },
+
+
         { 
-            path: '/collections/tshirt/product1',
+            path: '/products/:item',
 
             name : 'collections-item',
 
@@ -60,6 +72,7 @@ const router = createRouter({
 
             component : Login,
         },
+
         {
             path : '/register',
 
@@ -67,6 +80,7 @@ const router = createRouter({
 
             component : Register,
         },
+
         {
             path : '/forgot-password',
 
@@ -74,6 +88,7 @@ const router = createRouter({
 
             component : ForgotPassword,
         },
+        
         {
             path : '/account',
 
@@ -81,13 +96,7 @@ const router = createRouter({
 
             component : Account,
         },
-        {
-            path : '/shop/collection/:filter',
-
-            name : 'shop.collection',
-
-            component : Shop
-        }  
+       
 
     ]
 

@@ -19,7 +19,7 @@
             <h1 class="page-heading text-left">Featured Product</h1>
         <div class="flex flex-wrap gap-4">        
             <div v-for="(item, index)  in products" class="product-width box-border">
-               <router-link to="/collections/tshirt/product1">
+               <router-link :to="{ name: 'collections-item', params: { item : item.slug }}">
                     <div class="relative  overflow-hidden">                
                             <img :src="apiBase+item.imagePath"                                      
                         class="full-width transition ease-in-out  hover:scale-110  duration-300"  alt=""/>
