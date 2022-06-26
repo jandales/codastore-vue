@@ -1,5 +1,5 @@
 <script>
-import Alert from "../components/Alert.vue";
+import Alert from "../components/alert/Alert.vue";
     export default {
         
     data() {

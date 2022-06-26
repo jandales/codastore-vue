@@ -10,6 +10,12 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
 import Account from '../views/Account.vue'
+import UserProfile from '../components/accounts/UserProfile.vue'
+import UserAddress from '../components/accounts/UserAddress.vue'
+import PaymentOptions from '../components/accounts/paymentOption/PaymentOptions.vue'
+import PaymentOptionCreate from '../components/accounts/paymentOption/PaymentOptionCreate.vue'
+import PaymentOptionEdit from '../components/accounts/paymentOption/PaymentOptionEdit.vue'
+import Orders from '../components/accounts/Orders.vue'
 
 const router = createRouter({
 
@@ -95,6 +101,22 @@ const router = createRouter({
             name : 'account',
 
             component : Account,
+
+            children : [
+                
+                { path : 'profile', component: UserProfile },
+
+                { path : 'address', component : UserAddress },
+
+                { path : 'orders', component : Orders },
+
+                { path : 'payment-options', component : PaymentOptions },
+
+                { path : 'payment-options/create', component : PaymentOptionCreate },
+
+                { path : 'payment-options/:id/edit', name : 'payment-option.edit', component : PaymentOptionEdit },
+                
+            ]
         },
        
 

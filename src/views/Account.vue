@@ -8,11 +8,11 @@
                     </div>
                     <div class="flex flex-col  justify-center">
                         <label for="" class="font-semibold">Jesus Andales</label>
-                         <router-link to="/" class="text-sm hover:underline">Edit Profile</router-link>
+                         <router-link to="/account/profile" class="text-sm hover:underline">Edit Profile</router-link>
                     </div>
                    
                 </div>
-                 <router-link  to="/" class="hover:bg-[#f4f4f4] underline-offset-2" >
+                 <router-link  to="/account/profile"  class="hover:bg-[#f4f4f4] underline-offset-2" >
                     <div class="account-nav-item md:hidden">
                         <span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -22,7 +22,7 @@
                     <label>Profile</label>
                     </div>
                 </router-link>
-                <router-link  to="/" class="hover:bg-[#f4f4f4] underline-offset-2" >
+                <router-link  to="/account/orders"  class="hover:bg-[#f4f4f4] underline-offset-2" >
                     <div class="account-nav-item">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -32,7 +32,7 @@
                         <label>Orders</label>
                     </div>
                 </router-link>
-                <router-link  to="/" class="hover:bg-[#f4f4f4]">
+                <router-link to="/account/payment-options"  class="hover:bg-[#f4f4f4]">
                     <div class="account-nav-item">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -42,7 +42,7 @@
                     <label>Payment Options</label>
                     </div>
                 </router-link>
-                <router-link  to="/" class="hover:bg-[#f4f4f4]">
+                <router-link  to="/account/address"  class="hover:bg-[#f4f4f4]">
                     <div class="account-nav-item">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -53,7 +53,7 @@
                     <label>Shipping Address</label>
                     </div>
                 </router-link>
-                <router-link  to="/" class="hover:bg-[#f4f4f4]">
+                <router-link  to="/account/logout"  class="hover:bg-[#f4f4f4]">
                     <div class="account-nav-item">
                         <span>
                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -65,30 +65,7 @@
                 </router-link>
             </div>
             <div class="ml-8 w-full">
-                   <div class="flex">
-                        <div class="flex flex-col w-50">
-                            <div class="relative h-50 w-50">
-                                 <img src="../assets/avatar.jpg"  class="w-full h-full" alt=""/>
-                                 <router-link to="/" class="absolute bg-white rounded-full p-2 bottom-2 right-2">
-                                    <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                    </span>
-                                 </router-link>
-                            </div>
-                           
-                            <div class="flex flex-col gap-4 mt-4">
-                                <router-link to="/" class="block">
-                                    <button class="btn  md:w-full">Edit</button>                                   
-                                </router-link>                               
-                                 <router-link to="/">
-                                    <button class="btn md:w-full">Change Password</button>                                   
-                                </router-link>
-                            </div>
-                        </div>
-                   </div>
+                <router-view></router-view>
             </div>
         </div>
     </div>

@@ -11,6 +11,8 @@ import './splide.css'
 let app = createApp(App)
 // 2. Assign the global variable before mounting
 app.config.globalProperties.baseApi = 'http://127.0.0.1:8000';
+app.config.globalProperties.errors = [];
+app.config.globalProperties.isSuccess = false;
 // 3. Use router and mount app
 app.component('font-awesome-icon', FontAwesomeIcon)
 .use(router)

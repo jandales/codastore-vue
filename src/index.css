@@ -64,13 +64,12 @@ select{
 }
 
 .btn{
-  @apply bg-[#333] box-border text-sm text-white  inline py-3 px-10  w-full md:w-max;
+  @apply bg-[#333] box-border text-sm text-white font-semibold  inline py-3 px-10 opacity-90 hover:opacity-100  w-full md:w-max;
 }
 
 table tr th  {
   @apply text-xs font-normal pb-6 tracking-wider uppercase border-b text-light;
 }
-
 
 table tr td {
   @apply py-8;
@@ -99,5 +98,10 @@ table tr td {
 .product-item .collection {
   @apply block capitalize text-sm tracking-wide pt-1;
 }
+
+input[type="text"],input[type="email"],input[type="password"], input[type="number"], input[type="date"]{
+  @apply border outline-none text-sm p-2 w-full;
+}
+
 
  
