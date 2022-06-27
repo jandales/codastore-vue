@@ -7,8 +7,8 @@
                         <img src="../assets/avatar.jpg" alt="">
                     </div>
                     <div class="flex flex-col  justify-center">
-                        <label for="" class="font-semibold">Jesus Andales</label>
-                         <router-link to="/account/profile" class="text-sm hover:underline">Edit Profile</router-link>
+                        <label for="" class="font-semibold tracking-widest">Jesus Andales</label>
+                         <router-link to="/account/profile" class="text-xs tracking-widest hover:underline">Edit Profile</router-link>
                     </div>
                    
                 </div>
@@ -19,7 +19,7 @@
                              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
                     </span>
-                    <label>Profile</label>
+                    <label class="tracking-widest">Profile</label>
                     </div>
                 </router-link>
                 <router-link  to="/account/orders"  class="hover:bg-[#f4f4f4] underline-offset-2" >
@@ -29,7 +29,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                             </svg>
                         </span>
-                        <label>Orders</label>
+                        <label  class="tracking-widest">Orders</label>
                     </div>
                 </router-link>
                 <router-link to="/account/payment-options"  class="hover:bg-[#f4f4f4]">
@@ -39,7 +39,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                             </svg>
                         </span>
-                    <label>Payment Options</label>
+                    <label class="tracking-widest">Payment Options</label>
                     </div>
                 </router-link>
                 <router-link  to="/account/address"  class="hover:bg-[#f4f4f4]">
@@ -50,7 +50,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
                             </svg>
                         </span>
-                    <label>Shipping Address</label>
+                    <label class="tracking-widest">Shipping Address</label>
                     </div>
                 </router-link>
                 <router-link  to="/account/logout"  class="hover:bg-[#f4f4f4]">
@@ -60,11 +60,11 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                            </svg>
                         </span>
-                    <label>Logout</label>
+                    <label class="tracking-widest">Logout</label>
                     </div>
                 </router-link>
             </div>
-            <div class="ml-8 w-full">
+            <div class="ml-4 md:ml-8 w-full">
                 <router-view></router-view>
             </div>
         </div>

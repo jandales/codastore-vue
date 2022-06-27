@@ -11,11 +11,14 @@ import Register from '../views/Register.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
 import Account from '../views/Account.vue'
 import UserProfile from '../components/accounts/UserProfile.vue'
-import UserAddress from '../components/accounts/UserAddress.vue'
+import Address from '../components/accounts/address/Address.vue'
 import PaymentOptions from '../components/accounts/paymentOption/PaymentOptions.vue'
 import PaymentOptionCreate from '../components/accounts/paymentOption/PaymentOptionCreate.vue'
 import PaymentOptionEdit from '../components/accounts/paymentOption/PaymentOptionEdit.vue'
-import Orders from '../components/accounts/Orders.vue'
+import Orders from '../components/accounts/orders/Orders.vue'
+import OrderShow from '../components/accounts/orders/OrderShow.vue'
+import AddressCreate from '../components/accounts/address/AddressCreate.vue'
+import AddressEdit from '../components/accounts/address/AddressEdit.vue'
 
 const router = createRouter({
 
@@ -106,15 +109,21 @@ const router = createRouter({
                 
                 { path : 'profile', component: UserProfile },
 
-                { path : 'address', component : UserAddress },
-
                 { path : 'orders', component : Orders },
+
+                { path : 'orders/:id/show', component : OrderShow },
 
                 { path : 'payment-options', component : PaymentOptions },
 
                 { path : 'payment-options/create', component : PaymentOptionCreate },
 
                 { path : 'payment-options/:id/edit', name : 'payment-option.edit', component : PaymentOptionEdit },
+
+                { path : 'address', component : Address },
+
+                { path : 'address/create', component : AddressCreate },
+
+                { path : 'address/:id/edit', name:'address.edit', component : AddressEdit },
                 
             ]
         },
