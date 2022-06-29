@@ -5,7 +5,7 @@
     </div>
 
     <div class="flex flex-wrap gap-4 mt-8 mb-16">
-        <div v-for="address in addressList" class="w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray  hover:border-[#d4edda]  py-2 px-4" :class="{'border-[#d4edda]' : address.status }"> 
+        <div v-for="address in addressList" class="flex flex-col w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray  hover:border-[#d4edda]  py-2 px-4" :class="{'border-[#d4edda]' : address.status }"> 
  
             
             <div class="flex items-center mb-1">             
@@ -20,11 +20,11 @@
             <div class="flex items-center mb-1">             
                <label for="" class="capitalize">{{ address.country }}</label>
             </div>    
-                   <div class="flex items-center mb-1">             
+            <div class="flex items-center mb-1">             
                <label for="" class="capitalize">{{ address.phone }}</label>
             </div>           
         
-            <div class="flex gap-2">
+            <div class="flex gap-2 mt-auto">
               <router-link :to="{ name : 'address.edit', params : {id : address.id } }" class="text-sky-500 hover:underline">Edit</router-link>            
               
               <span @click="destroy(address.id)" class="text-rose-500 cursor-pointer hover:underline" >Delete</span>
@@ -53,30 +53,24 @@
         },
         methods : {
           getAddressList() {
-            this.axios.get('/v1/user/1/address')
-                .then(response => {                 
-                  this.addressList = response.data;
-                })            
+            this.$store.dispatch('getAddresses');       
           },
           destroy(id) {
-             this.axios.delete(`/v1/user/1/address/${id}`)
-                .then(response => {
-                  if (response.status == 200){
-                     this.getAddressList()
-                  }                 
-                })  
+            this.$store.dispatch('deleteAddeess',id);
+            this.getAddressList(); 
           },
           setAsDefault(id) {
-             this.axios.patch(`/v1/user/1/address/${id}`)
-                .then(response => {
-                  if (response.status == 200){
-                     this.getAddressList()
-                  }                 
-                })  
+            this.$store.dispatch('setDefaulAddress',id);
+            this.getAddressList();             
           }
         },
         created() {
           this.getAddressList();
+        },
+        computed : {
+            addressList() {
+               return this.$store.getters.addresses;
+            }
         }
     }
 </script>

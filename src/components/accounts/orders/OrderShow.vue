@@ -7,15 +7,17 @@
     },
     methods : {
         getOrder() {
-            this.axios('/v1/user/7/orders/1')
-            .then(response => {  
-                this.order = response.data;                
-            });
+            this.$store.dispatch('getOrder',this.$route.params.id)
         }
     },
     created() {
         this.getOrder();       
     },
+    computed : {
+        order() {
+            return this.$store.getters.order;
+        }
+    }
  
   
  }
@@ -27,9 +29,9 @@
             <h1 class="block  font-bold">Order Details</h1>       
         </div>
        
-    <div class="flex flex-col md:flex-row gap-8">
+    <div class="flex flex-col md:flex-row gap-8" v-if="order">
         <div class="w-full">
-        <div class="order bg-white">           
+        <div class="order bg-white" >           
             <div v-for="item in order.items" class="order-item">
                 <div class="w-[300px] flex">
                     <div class="relative w-20">

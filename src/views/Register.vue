@@ -12,22 +12,16 @@
         },
         methods : {
             register(){
-                let form = new FormData(document.getElementById('form'));
-                this.axios.post(`${this.baseApi}/api/v1/register`, {
-                    name : this.user.name,
-                    email : this.user.email,
-                    password : this.user.password,
-                })
-                .then(response => { 
-                    if(response.status === 200){
-                        this.$router.push({ name : 'login' })
-                    }                      
-                })
-                .catch(error => {                        
-                    if(error.response.status == 422){
-                        this.errors = error.response.data.errors;                       
-                    }
-                })
+                this.errors = [];
+                this.$store.dispatch('register', this.user) 
+                // let success = this.$store.getters.success;   
+                // this.errors = this.$store.getters.errors; 
+                // console.log(success);
+                // if(success){
+                //     this.$router.push({ name : 'login' })
+                //     return;
+                // }          
+               
             }
         }
     }

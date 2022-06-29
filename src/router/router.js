@@ -19,6 +19,11 @@ import Orders from '../components/accounts/orders/Orders.vue'
 import OrderShow from '../components/accounts/orders/OrderShow.vue'
 import AddressCreate from '../components/accounts/address/AddressCreate.vue'
 import AddressEdit from '../components/accounts/address/AddressEdit.vue'
+import Logout from '../views/Logout.vue'
+import Dashboard from '../components/accounts/Dashboard.vue'
+
+
+import middleware  from './middleware'
 
 const router = createRouter({
 
@@ -67,6 +72,7 @@ const router = createRouter({
 
             component : Contact,
         }, 
+
         { 
             path: '/cart',
 
@@ -74,12 +80,15 @@ const router = createRouter({
 
             component : Cart,
         },
+
         {
             path : '/login',
 
             name : 'login',
 
             component : Login,
+
+            beforeEnter : middleware.guest,
         },
 
         {
@@ -88,6 +97,8 @@ const router = createRouter({
             name : 'register',
 
             component : Register,
+
+            beforeEnter : middleware.guest,
         },
 
         {
@@ -96,7 +107,16 @@ const router = createRouter({
             name : 'forgotPassword',
 
             component : ForgotPassword,
+
+            beforeEnter : middleware.guest,
         },
+
+        {   
+            path : '/logout',
+        
+            name : 'logout', 
+
+            component : Logout },
         
         {
             path : '/account',
@@ -105,8 +125,12 @@ const router = createRouter({
 
             component : Account,
 
+            beforeEnter : middleware.user,
+
             children : [
-                
+
+                { path : 'dashboard', component: Dashboard },
+
                 { path : 'profile', component: UserProfile },
 
                 { path : 'orders', component : Orders },
@@ -123,7 +147,7 @@ const router = createRouter({
 
                 { path : 'address/create', component : AddressCreate },
 
-                { path : 'address/:id/edit', name:'address.edit', component : AddressEdit },
+                { path : 'address/:id/edit', name:'address.edit', component : AddressEdit },               
                 
             ]
         },

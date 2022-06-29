@@ -2,64 +2,31 @@
 import AlertSuccess from '../../alert/AlertSuccess.vue';
     export default {
        data() {
-            return {
-                address : {  
-                    firstname : null,
-                    lastname: null,
-                    street :  null,
-                    city : null,
-                    phone : null,
-                    country : null,
-                    region : null,
-                    zipcode : null,
-                 
-                },
+            return {               
                 errors : [],
                 isSuccess : false,                                
             }         
        }, 
 
-        methods : {
-            getAddress() {
-                this.axios.get(`/v1/user/1/address/${this.$route.params.id}`)
-                .then(response => { 
-                    if (response.status == 200) { 
-                        this.address.firstname = response.data.firstname
-                        this.address.lastname = response.data.lastname
-                        this.address.street = response.data.street
-                        this.address.city = response.data.city
-                        this.address.phone = response.data.phone
-                        this.address.country = response.data.country
-                        this.address.region = response.data.region
-                        this.zipcode = response.data.zipcode
-                    }
-                 });                
-            },
+        methods : {        
             updateAddress() {
-                this.axios.put(`/v1/user/1/address/${this.$route.params.id}`, {
-                    firstname : this.address.firstname,
-                    lastname: this.address.lastname,
-                    street :  this.address.street,
-                    city : this.address.city,
-                    phone : this.address.phone,
-                    country : this.address.country,
-                    region : this.address.region,
-                    zipcode : this.zipcode,
-                })
-                .then(response => { 
-                    if (response.status == 200) { 
-                        this.isSuccess = true;
-                        this.errors = []
-                    }
-                 })
-                .catch(errors => {
-                    this.errors = errors.response.data.errors;
-                })
+                this.errors = [];
+                this.isSuccess = false;
+                this.$store.dispatch('updateAddress',{ id: this.$route.params.id, address : this.address }) 
+                        .then(response => { if(response.status == 200 ) return this.isSuccess  =  true})              
+                        .catch(errors => {
+                            this.errors = errors.response.data.errors;
+                        })
             }
         },
         created() {
-            this.getAddress();
+             this.$store.dispatch('getAddress', this.$route.params.id);  
         },
+        computed : {
+            address() {
+                return this.$store.getters.address;
+            }
+        },            
          components: { AlertSuccess }
       
     }
@@ -69,7 +36,7 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
          <AlertSuccess v-if="isSuccess" :alert="'danger'" :message="'Successfully Added'" ></AlertSuccess> 
         <h1 class="block mb-4 font-bold">Edit Address</h1>
         
-        <form @submit.prevent="updateAddress">
+        <form @submit.prevent="updateAddress" v-if="address">
             <div class="flex flex-col md:flex-row gap-0 md:gap-4">
                 <div class="relative w-full block mb-4">
                     <label for="" class="block mb-2">First Name*</label>
@@ -128,7 +95,7 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
                 </div>
                    <div class="relative w-full md:w-1/5 block mb-4">
                     <label for="" class="block mb-2">Zip Code*</label>
-                    <input type="text"  v-model="zipcode" name="card_cvc">
+                    <input type="text"  v-model="address.zipcode" name="card_cvc">
                     <div v-if="errors.zipcode" class="flex flex-col gap-2 mt-2">
                         <small class="block text-rose-400" v-for="error in errors.zipcode"> {{ error }} </small>
                     </div>

@@ -21,25 +21,9 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
 
         methods : {
             addAddress() {
-                this.axios.post('/v1/user/1/address', {
-                    firstname : this.address.firstname,
-                    lastname: this.address.lastname,
-                    street :  this.address.street,
-                    city : this.address.city,
-                    phone : this.address.phone,
-                    country : this.address.country,
-                    region : this.address.region,
-                    zipcode : this.zipcode,
-                })
-                .then(response => { 
-                    if (response.status == 200) { 
-                        this.isSuccess = true;
-                        this.errors = []
-                    }
-                 })
-                .catch(errors => {
-                    this.errors = errors.response.data.errors;
-                })                
+                this.errors = []
+                this.$store.dispatch('addAddress', this.address)  
+                            .catch(errors => { this.errors = errors.response.data.errors; });
             }
         },
          components: { AlertSuccess }
@@ -110,7 +94,7 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
                 </div>
                    <div class="relative w-full md:w-1/5 block mb-4">
                     <label for="" class="block mb-2">Zip Code*</label>
-                    <input type="text"  v-model="zipcode" name="card_cvc">
+                    <input type="text"  v-model="address.zipcode" name="card_cvc">
                     <div v-if="errors.zipcode" class="flex flex-col gap-2 mt-2">
                         <small class="block text-rose-400" v-for="error in errors.zipcode"> {{ error }} </small>
                     </div>

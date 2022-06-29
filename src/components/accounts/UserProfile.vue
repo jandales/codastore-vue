@@ -3,32 +3,18 @@
   
     export default {
     data() {
-        return {
-            user: {},
-            errors : [],           
+        return {           
+            errors : [], 
+            isSuccess : false,          
         };
     },
-    methods: {
-        getUser() {
-            this.axios.get("/v1/user/1")
-                .then(response => {
-                this.user = response.data;
-            })
-                .catch(errors => {
-                console.log(errors.response.errors.data);
-            });
-        },
+    methods: {        
         updateProfile() {
-            this.axios.put("/v1/user/1", {
-                name: this.user.name,
-                contact: this.user.contact,
-                dateofbirth: this.user.dateofbirth,
-                age: this.user.age,
-            })
+            this.errors = [];
+            this.isSuccess = false;
+            this.$store.dispatch('updateUser',this.user)
             .then(response => {
-                    this.isSuccess = true;
-                    this.errors = [];
-                    this.user = response.data;
+                    this.isSuccess = true;  
             })
             .catch(errors => {
                 if (errors.response.status == 422) {                
@@ -47,7 +33,12 @@
         }
     },
     created() {
-        this.getUser();        
+        this.$store.dispatch('user'); 
+    },
+    computed : {
+        user(){
+            return this.$store.getters.user;
+        }
     },
     components: { AlertSuccess }
 }
@@ -55,7 +46,7 @@
 
 <template>
    <AlertSuccess v-if="isSuccess" :alert="'danger'" :message="'Successfully Updated'" ></AlertSuccess> 
-    <div class="w-full flex gap-8 mb-16">
+    <div class="w-full flex gap-8 mb-16" v-if="user">
         <div class="w-4/5">           
              <form @submit.prevent="updateProfile">
                    <div class="relative w-full block mb-4">

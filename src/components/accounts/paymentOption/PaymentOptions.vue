@@ -5,7 +5,7 @@
     </div>
     
     <div class="flex flex-wrap gap-4 mt-8 mb-16">
-    <div v-for="option in paymentOptions" class="w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray  hover:border-[#d4edda]  py-2 px-4" :class="{'border-[#d4edda]' : option.status }"> 
+    <div v-for="option in paymentCards" class="w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray  hover:border-[#d4edda]  py-2 px-4" :class="{'border-[#d4edda]' : option.status }"> 
 
             <div class="flex items-center mb-2">
                 <span>
@@ -62,30 +62,24 @@
         },
         methods : {
           getPaymentOptions() {
-            this.axios.get('/v1/user/1/paymentOption')
-                .then(response => {
-                  this.paymentOptions = response.data;
-                })            
+             this.$store.dispatch('getPaymentCards');         
           },
           destroy(id) {
-             this.axios.delete(`/v1/user/1/paymentOption/${id}`)
-                .then(response => {
-                  if (response.status == 200){
-                     this.getPaymentOptions();
-                  }                 
-                })  
+              this.$store.dispatch('deleteCard',id);
+              this.getPaymentOptions();
           },
           setAsDefault(id) {
-             this.axios.patch(`/v1/user/1/paymentOption/${id}`)
-                .then(response => {
-                  if (response.status == 200){
-                     this.getPaymentOptions();
-                  }                 
-                })  
+             this.$store.dispatch('setDefaulCard',id);
+             this.getPaymentOptions();
           }
         },
-        created() {
+        mounted() {
           this.getPaymentOptions();
+        },
+        computed :  {
+             paymentCards() {
+                return this.$store.getters.paymentCards;
+             }
         }
     }
 </script>

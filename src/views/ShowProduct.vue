@@ -5,29 +5,24 @@
 
     export default{
     data() {
-        return {
-            apiBase : 'http://127.0.0.1:8000',
-            product : null,
+        return { 
             is_review_selected: false,
             activeTabClass: "bg-[#f5f5f5]",
         };
     },
-    methods: {
+    methods : {
         tabEvent(state) {
             this.is_review_selected = state;
         }
     },
     created () {  
-
-         this.axios
-            .get(`http://127.0.0.1:8000/api/v1/products/${this.$route.params.item}`)
-            .then(response => {  
-                this.product = response.data.product;
-           
-            });
-    },
-    components: { ProductDescription, ProductReview, FeatureProduct },
+        this.$store.dispatch('getProduct',this.$route.params.item)        
+       
+    },  
     computed : {
+        product(){      
+            return  this.$store.getters.product;
+        },
         variants() {
 
             let newArray = [];
@@ -44,13 +39,14 @@
             })  
 
             return newArray;        
-        }
-    }
+        }       
+    },
+    components: { ProductDescription, ProductReview, FeatureProduct },
 }
 </script>
 <template>
 
-    <div class="container md:m-auto">
+    <div class="container md:m-auto" v-if="product">
          <div class="w-full  p-4 mt-4 md:mt-8 md:p-0">
          <div class="flex flex-col md:flex-row">
             <div class="w-full md:w-3/5">
@@ -58,12 +54,12 @@
                      <div class="w-full flex">
                         <ul class="flex flex-col gap-4">
                             <li v-for="photo in product.photos" class="w-20">
-                                <img :src="apiBase+photo.path" class="w-full h-full aspect-square"  alt="">
+                                <img :src="baseApi+photo.path" class="w-full h-full aspect-square"  alt="">
                             </li >
                                               
                          </ul>
                         <figure class="ml-8 mb-4">
-                            <img :src="apiBase+product.imagePath" class="w-full md:w-100 "  alt="">
+                            <img :src="baseApi+product.imagePath" class="w-full md:w-100 "  alt="">
                         </figure>
                         
                      </div>
@@ -72,7 +68,7 @@
             </div>
             <div class="w-2/5 ml-8">
                 <div class="block">
-                    <h1 class="block text-theme font-semibold  tracking-widest uppercase mt-4 md:mt-0 mb-2">{{ product.name }}</h1>
+                    <h1 class="block text-theme font-semibold text-lg tracking-widest uppercase mt-4 md:mt-0 mb-2">{{ product.name }}</h1>
                     <ul class="flex gap-2 mb-2">
                         <li><font-awesome-icon icon="fa-solid fa-star" color="#ff523b" /></li>
                         <li><font-awesome-icon icon="fa-regular fa-star"  color="#ff523b" /></li>
@@ -122,6 +118,6 @@
             </div>
         </div>
     </div>
-    </div>
+    </div> 
     <FeatureProduct></FeatureProduct>
 </template>

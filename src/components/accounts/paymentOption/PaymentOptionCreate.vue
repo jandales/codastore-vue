@@ -3,11 +3,11 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
     export default {
        data() {
             return {
-                card : {
-                    name : null,
-                    number : null,
-                    expire_date : null,
-                    code : null,
+                input : {
+                    card_name : null,
+                    card_number : null,
+                    card_expire_date : null,
+                    card_card_cvc : null,
                 },
                 errors : [],
                 isSuccess : false,                                
@@ -16,22 +16,12 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
 
         methods : {
             addCard() {
-                this.axios.post('/v1/user/1/paymentOption', {
-                    card_name : this.card.name,
-                    card_number : this.card.number,
-                    card_expire_date : this.card.expire_date,
-                    card_cvc : this.card.code
-                })
-                .then(response => { 
-                    if (response.status == 200) { 
-                        this.isSuccess = true;
-                        this.errors = []
-                    }
-                 })
-                .catch(errors => {
-                    this.errors = errors.response.data.errors;
-                })
-            }
+                this.errors = [];
+                this.isSuccess = false;
+                this.$store.dispatch('addCard', this.input)
+                    .catch(errors => { this.errors = errors.response.data.errors; });
+                this.isSuccess = true;                          
+            },
         },
          components: { AlertSuccess }
       
@@ -45,7 +35,7 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
         <form @submit.prevent="addCard">
             <div class="relative w-full block mb-4">
                 <label for="" class="block mb-2">Name</label>
-                <input type="text" v-model="card.name" name="card_name">
+                <input type="text" v-model="input.card_name" name="card_name">
                 <div v-if="errors.card_name" name="password" class="flex flex-col gap-2 mt-2">
                     <small class="block text-rose-400" v-for="error in errors.card_name"> {{ error }} </small>
                 </div>
@@ -53,7 +43,7 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
 
             <div class="relative w-full block mb-4">
                 <label for="" class="block mb-2">Card Number</label>
-                <input type="text"   v-model="card.number" name="card_number">
+                <input type="text"   v-model="input.card_number" name="card_number">
                  <div v-if="errors.card_number" name="password" class="flex flex-col gap-2 mt-2">
                     <small class="block text-rose-400" v-for="error in errors.card_number"> {{ error }} </small>
                 </div>
@@ -61,7 +51,7 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
 
             <div class="relative w-full block mb-4">
                 <label for="" class="block mb-2">Expired Date</label>
-                <input type="text"  v-model="card.expire_date" name="card_expired_date">
+                <input type="text"  v-model="input.card_expire_date" name="card_expired_date">
                  <div v-if="errors.card_expire_date" name="password" class="flex flex-col gap-2 mt-2">
                     <small class="block text-rose-400" v-for="error in errors.card_expire_date"> {{ error }} </small>
                 </div>
@@ -69,7 +59,7 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
 
             <div class="relative w-full block mb-4">
                 <label for="" class="block mb-2">Code</label>
-                <input type="text"  v-model="card.code" name="card_cvc">
+                <input type="text"  v-model="input.card_cvc" name="card_cvc">
                  <div v-if="errors.card_cvc" name="password" class="flex flex-col gap-2 mt-2">
                     <small class="block text-rose-400" v-for="error in errors.card_cvc"> {{ error }} </small>
                 </div>

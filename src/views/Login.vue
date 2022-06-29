@@ -1,6 +1,8 @@
 <script>
 import Alert from "../components/alert/Alert.vue";
-    export default {
+
+
+export default {
         
     data() {
         return {
@@ -12,22 +14,14 @@ import Alert from "../components/alert/Alert.vue";
         };
     },
     methods: {
-        Login() {              
-            this.axios.post(`/v1/login`, {
-                email: this.user.email,
-                password: this.user.password
-            })
-            
-            .then(response => {
-                localStorage.setItem("access_token", response.data.token);
-            })
-
-            .catch(error => {
-                if (error.response.status == 422) {
-                    console.log(error);
-                    this.errors = error.response.data.errors;
-                }
-            });                  
+        async Login() { 
+           this.errors = [];
+           await this.$store.dispatch('login', this.user)
+           .catch(error => { 
+            console.log(error);               
+                if (error.response.status == 422)
+                    return  this.errors = error.response.data.errors;
+           });          
         },
     },
     components: { Alert }
@@ -35,7 +29,8 @@ import Alert from "../components/alert/Alert.vue";
 </script>
 <template>  
       
-           <div class="w-full md:w-[400px] px-4 mx-auto md:px-0">
+         <div class="flex items-center justify-center h-[calc(100vh_-_100px)]">
+              <div class="w-full md:w-[400px]  px-4 mx-auto md:px-0">
              <div class="p-8">
                  <h1 class="block text-[2rem] text-center">Login</h1>
                  <small class="block text-center mt-2">Dont have an account yet? 
@@ -67,5 +62,6 @@ import Alert from "../components/alert/Alert.vue";
             </form>
 
            </div> 
+         </div>
  
 </template>

@@ -7,12 +7,16 @@
     },
     methods : {
         getOrders() {
-            this.axios('/v1/user/1/orders')
-            .then(response => {   this.orders = response.data  });
+            this.$store.dispatch('getOrders');            
         }
     },
     created()  {
         this.getOrders();
+    },
+    computed : {
+        orders() {
+            return this.$store.getters.orders;
+        }
     }
  }
 </script>

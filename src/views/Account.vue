@@ -1,6 +1,9 @@
+
+
 <template>
+
     <div class="container md:mx-auto">
-        <div class="flex md:mt-8">           
+        <div class="flex flex-col md:flex-row gap-8 md:gap-0 md:mt-8">           
             <div class="account-sidebar">
                 <div class="hidden md:flex gap-4 px-4 py-4">
                     <div class="relative rounded-full w-16 h-16 bg-[#f5f5f5] overflow-hidden">
@@ -12,7 +15,17 @@
                     </div>
                    
                 </div>
-                 <router-link  to="/account/profile"  class="hover:bg-[#f4f4f4] underline-offset-2" >
+                 <router-link  to="/account/dashboard"  class="hover:bg-[#f4f4f4] underline-offset-2" >
+                    <div class="account-nav-item">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                         </span>
+                    <label class="tracking-widest">Dashboard</label>
+                    </div>
+                </router-link>
+                  <router-link  to="/account/profile"  class="hover:bg-[#f4f4f4] underline-offset-2" >
                     <div class="account-nav-item md:hidden">
                         <span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -53,7 +66,7 @@
                     <label class="tracking-widest">Shipping Address</label>
                     </div>
                 </router-link>
-                <router-link  to="/account/logout"  class="hover:bg-[#f4f4f4]">
+                <router-link  :to="{name: 'logout'}"  class="hover:bg-[#f4f4f4]">
                     <div class="account-nav-item">
                         <span>
                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -64,7 +77,7 @@
                     </div>
                 </router-link>
             </div>
-            <div class="ml-4 md:ml-8 w-full">
+            <div class="ml-0 md:ml-8 w-full">
                 <router-view></router-view>
             </div>
         </div>
