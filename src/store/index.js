@@ -1,6 +1,8 @@
 import { createStore } from 'vuex'
 import address from './modules/address';
+import Cart from './modules/Cart';
 import collections from './modules/collections';
+import counter from './modules/counter';
 import LoginModules from './modules/login';
 import orders from './modules/orders';
 import paymentOptions from './modules/paymentOptions';
@@ -18,6 +20,8 @@ export default createStore ({
        address : address,
        orders : orders,
        user : user,
-       register : register
+       register : register,
+       counter : counter,
+       cart : Cart
     },
 });

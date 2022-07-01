@@ -2,7 +2,7 @@
 
 <template>
 
-    <div class="container md:mx-auto">
+    <div class="container min-h-[calc(100vh_-_100px)] md:mx-auto">
         <div class="flex flex-col md:flex-row gap-8 md:gap-0 md:mt-8">           
             <div class="account-sidebar">
                 <div class="hidden md:flex gap-4 px-4 py-4">

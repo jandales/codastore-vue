@@ -20,10 +20,15 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
        }, 
 
         methods : {
-            addAddress() {
+            async addAddress() {
                 this.errors = []
-                this.$store.dispatch('addAddress', this.address)  
-                            .catch(errors => { this.errors = errors.response.data.errors; });
+                this.isSuccess = false;
+                try {
+                     await this.$store.dispatch('addAddress', this.address)
+                     this.isSuccess = true;
+                } catch (e) {
+                     this.errors = e.response.data.errors;
+                }
             }
         },
          components: { AlertSuccess }

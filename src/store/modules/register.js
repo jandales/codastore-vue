@@ -19,13 +19,7 @@ export default {
     },
     actions : {
         async register({commit}, params){
-           await api.register(params)
-                    .then(response => {
-                        if(response.status === 200) commit('SET_SUCCESS', true)                
-                    })
-                    .catch(errors => {
-                        commit('SET_ERRORS', errors.response.data.errors);
-                    })      
+           await api.register(params)                       
         }
     }
 }

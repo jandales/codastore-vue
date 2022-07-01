@@ -2,6 +2,7 @@
 import Hero from '../components/Hero.vue'
 import HeroVue from './Hero.vue'
 
+
 export default {
     data() {
         return {
@@ -11,44 +12,33 @@ export default {
                 { name: "contact", url: "/contact" },
                 { name: "about", url: "/about" },
             ],
-            isHomePage : this.isHomePage = this.$route.name == 'home' ? true : false,
+            isSearchOpen : false,
+            isHomePage : true, 
+            isMenuOpen : false,      
             DISPLAY_FLEX : 'flex',
-            DISPLAY_HIDDEN : 'hidden',
-            TOP_OFFSET_NEG : 'top-[-100px]',
-            TOP_OFFSET : 'top-0'
+            DISPLAY_HIDDEN : 'hidden',          
          
         };
     },
     methods: {
         toggleMenu() {
-            const listNavWrapper = document.getElementById("list-nav-wrapper");
-            if (listNavWrapper.classList.contains("left-[-80%]")) {
-                listNavWrapper.classList.remove("left-[-80%]");
-                listNavWrapper.classList.add("left-[0]");
-                return;
-            }
-            listNavWrapper.classList.remove("left-[0]");
-            listNavWrapper.classList.add("left-[-80%]");
+            this.isMenuOpen = this.isMenuOpen == true ? false : true;            
         },
         openCart() {
             const modal = document.getElementById('modalCart');
             modal.classList.replace(this.DISPLAY_HIDDEN, this.DISPLAY_FLEX);           
         },
-        toggleSearch() {
-
-             const element = document.getElementById('topSearchWrapper');
-             
-             if(element.classList.contains(this.TOP_OFFSET_NEG)) {
-                element.classList.replace(this.TOP_OFFSET_NEG, this.TOP_OFFSET)
-                return;
-             }
-
-             element.classList.replace(this.TOP_OFFSET, this.TOP_OFFSET_NEG)
-
+        toggleSearch() {             
+             this.isSearchOpen = this.isSearchOpen == true ? false : true;
         },
- 
         
     }, 
+
+     watch: {
+            $route(to, from) {
+                this.isHomePage = to.name == 'home' ? true : false;  
+            }
+    },
 
 
       
@@ -56,7 +46,7 @@ export default {
 }
 </script>
 <template>
-    <div class="bg-white" :class="{ 'isHome' : isHomePage }"> 
+    <div class="bg-white  border-b" :class="{ 'isHome' : isHomePage }"> 
 
         <div class="container relative px-4 md:mx-auto lg:px-0" :class="{'min-h-screen' : isHomePage}">
             <!--Navigation-->
@@ -69,9 +59,8 @@ export default {
                         </svg>
                     </span>
                     <img src="../assets/logo.png"  height="100" width="100" alt="">
-                    <ul id="list-nav-wrapper" class="absolute top-0  left-[-80%] h-screen w-[80%] bg-white flex flex-col gap-4  items-start p-8
-                               md:flex md:flex-row md:relative md:h-auto md:bg-transparent md:left-0 z-10
-                               ">
+                    <ul id="list-nav-wrapper" class="menu" :class="{'!left-[0]' : isMenuOpen}"
+                               >
                         <div class="flex justify-between items-center w-full
                                     md:hidden">
                             <label for="menu" class="text-[2rem]">Menu</label>
@@ -83,7 +72,7 @@ export default {
                         </div>
                         
                         <li class="w-full" v-for='nav in navigations'>
-                                <router-link :to="nav.url" class="block md:text-xs font-semibold text-left uppercase tracking-widest text-gray-500 hover:underline underline-offset-1">{{ nav.name }}</router-link>
+                                <router-link :to="nav.url" class="block md:text-xs text-left uppercase tracking-widest text-gray-500 hover:underline underline-offset-1">{{ nav.name }}</router-link>
                         </li>
                         
                         
@@ -97,13 +86,14 @@ export default {
                         </svg>
                     </span>
 
-                    <router-link v-if="this.$store.getters['authenticated']" to="/account">
+                    <router-link v-if="this.$store.getters['authenticated']" to="/account/dashboard">
                         <span class="md:text-xs">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>  
                         </span>                     
                     </router-link>
+
                      <router-link v-else to="/login">
                         <span class="md:text-xs">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -128,7 +118,7 @@ export default {
         </div>
         
     </div>
-    <div id="topSearchWrapper" class="absolute  w-full bg-white z-20 border-b transition-all ease-in duration-300" :class="this.TOP_OFFSET_NEG">
+    <div id="topSearchWrapper"  class="absolute  w-full bg-white z-20 border-b ease-in-out top-[-100px]" :class="{'!top-0' : isSearchOpen}">
         <div class="container md:mx-auto flex justify-center items-center h-[100px]">
            <div class="w-full flex items-center">
                 <span class="pr-4">
@@ -145,6 +135,7 @@ export default {
             </div>
         </div>
     </div>
+     
 </template>
 
 

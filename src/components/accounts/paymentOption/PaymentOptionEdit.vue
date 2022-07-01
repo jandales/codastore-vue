@@ -13,12 +13,15 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
             getPaymentOption() {
                 this.$store.dispatch('getPaymentCard',this.$route.params.id); 
             },
-            updateCard() {     
+           async updateCard() {     
                 this.errors = [];
-                this.isSuccess = false;       
-                this.$store.dispatch('updateCard',{ id : this.$route.params.id, card : this.input }) 
-                    .then(response => { if (response.status == 200)  this.isSuccess = true; })    
-                    .catch(errors => { this.errors = errors.response.data.errors; })
+                this.isSuccess = false; 
+                try {
+                   await this.$store.dispatch('updateCard',{ id : this.$route.params.id, card : this.input }) 
+                   this.isSuccess = true;
+                } catch (e) {
+                    this.errors = e.response.data.errors;
+                } 
             }
         },
         created(){

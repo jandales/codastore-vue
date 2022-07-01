@@ -16,12 +16,15 @@ export default {
     methods: {
         async Login() { 
            this.errors = [];
-           await this.$store.dispatch('login', this.user)
-           .catch(error => { 
-            console.log(error);               
-                if (error.response.status == 422)
-                    return  this.errors = error.response.data.errors;
-           });          
+           try  {
+                await this.$store.dispatch('login', this.user)
+                window.location.reload();
+           } 
+           catch(e) {                         
+                if (e.response.status == 422){
+                    this.errors = e.response.data.errors;
+                }                   
+           };          
         },
     },
     components: { Alert }

@@ -15,12 +15,15 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
        }, 
 
         methods : {
-            addCard() {
+           async addCard() {
                 this.errors = [];
                 this.isSuccess = false;
-                this.$store.dispatch('addCard', this.input)
-                    .catch(errors => { this.errors = errors.response.data.errors; });
-                this.isSuccess = true;                          
+                try {
+                    await  this.$store.dispatch('addCard', this.input)
+                    this.isSuccess = true 
+                } catch (e) {
+                    this.errors = e.response.data.errors; 
+                }                      
             },
         },
          components: { AlertSuccess }

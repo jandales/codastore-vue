@@ -11,16 +11,16 @@
             }
         },
         methods : {
-            register(){
+            async register(){
                 this.errors = [];
-                this.$store.dispatch('register', this.user) 
-                // let success = this.$store.getters.success;   
-                // this.errors = this.$store.getters.errors; 
-                // console.log(success);
-                // if(success){
-                //     this.$router.push({ name : 'login' })
-                //     return;
-                // }          
+                try {
+                   await  this.$store.dispatch('register', this.user) 
+                   this.$router.push({ name : 'login' });
+                } catch(e) {
+                     if(e.response.status == 422){
+                        this.errors = e.response.data.errors;
+                     }
+                } 
                
             }
         }
@@ -28,7 +28,8 @@
 </script>
 <template>  
       
-           <div class="w-full md:w-[400px] px-4 mx-auto md:px-0 mb-16">
+    <div class="flex  items-center justify-center h-[calc(100vh_-_100px)]">
+         <div class="w-full md:w-[400px] px-4 mx-auto md:px-0 mb-16">
              <div class="p-8">
                  <h1 class="block text-[2rem] text-center">Register</h1>
                  <small class="block text-center mt-2">Already have an account? 
@@ -61,5 +62,6 @@
                 </div> 
             </form>  
            </div> 
+    </div>          
  
 </template>

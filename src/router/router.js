@@ -22,7 +22,6 @@ import AddressEdit from '../components/accounts/address/AddressEdit.vue'
 import Logout from '../views/Logout.vue'
 import Dashboard from '../components/accounts/Dashboard.vue'
 
-
 import middleware  from './middleware'
 
 const router = createRouter({
@@ -129,7 +128,7 @@ const router = createRouter({
 
             children : [
 
-                { path : 'dashboard', component: Dashboard },
+                { path : 'dashboard', name : 'dashboard', component: Dashboard },
 
                 { path : 'profile', component: UserProfile },
 

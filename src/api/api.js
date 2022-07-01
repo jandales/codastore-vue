@@ -99,11 +99,20 @@ export default {
     // Orders
 
     getOrders() {
-        return axios('/user/orders')        
+        return axios.get('/user/orders')        
     },
 
     getOrder(id) {
-        return axios(`/user/orders/${id}`)        
+        return axios.get(`/user/orders/${id}`)        
+    },
+    getCart(){
+        return axios.get('/cart');
+    },
+    updateCartQty(id, quantity){
+        return axios.patch(`/cart/${id}`, { quantity : quantity });
+    },
+    deleteCartItem(id){
+        return axios.delete(`/cart/item/${id}`);
     }
     
 

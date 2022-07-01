@@ -9,18 +9,15 @@
         };
     },
     methods: {        
-        updateProfile() {
+       async updateProfile() {
             this.errors = [];
             this.isSuccess = false;
-            this.$store.dispatch('updateUser',this.user)
-            .then(response => {
-                    this.isSuccess = true;  
-            })
-            .catch(errors => {
-                if (errors.response.status == 422) {                
-                    this.errors = errors.response.data.errors;
-                }
-            });
+            try {
+                await this.$store.dispatch('updateUser',this.user)
+                this.isSuccess = true;  
+            } catch (error) {
+                this.errors = error.response.data.errors;
+            }
         },
         onDateChange(event){                 
            this.user.age = this.calculateAge(event.target.value);

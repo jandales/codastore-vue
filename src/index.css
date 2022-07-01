@@ -94,14 +94,14 @@ table tr td {
   @apply product-width box-border;
 }
 .product-item .name {
-  @apply block capitalize  text-sm text-black tracking-wide font-bold hover:underline;
+  @apply block capitalize  text-sm text-black tracking-widest hover:underline;
 }
 .product-item .collection {
   @apply block capitalize text-sm tracking-wide pt-1;
 }
 
-input[type="text"],input[type="email"],input[type="password"], input[type="number"], input[type="date"]{
-  @apply border outline-none text-sm p-2 w-full;
+input[type="text"],input[type="email"],input[type="password"], input[type="number"], input[type="date"], textarea{
+  @apply border border-[#d0d0d0] outline-none text-sm p-2 w-full bg-transparent focus:border-black;
 }
 .order {
   @apply flex flex-col w-full bg-lightGray p-4 mb-4;
@@ -122,5 +122,12 @@ input[type="text"],input[type="email"],input[type="password"], input[type="numbe
   @apply flex;
 }
 
+.ease-in-out{
+  @apply transition-all ease-in duration-300;
+}
 
+.menu {
+  @apply absolute top-0  left-[-80%] h-screen w-[80%] bg-white flex flex-col gap-4  items-start p-8
+          md:flex md:flex-row md:relative md:h-auto md:bg-transparent md:left-0 z-10 ease-in-out;
+}
  

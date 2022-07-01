@@ -13,7 +13,6 @@ import Variant1 from '../components/Variant.vue';
             attribute : [],
             is_review_selected: false,    
             activeTabClass: "bg-[#f5f5f5]",
-            selected : 0,
         };
     },
     methods : {
@@ -27,47 +26,34 @@ import Variant1 from '../components/Variant.vue';
             if(this.qty > 0) this.qty--;            
             this.$store.dispatch('decrement',this.qty);               
         },
-        setAttribute(event){            
-            if (event.currentTarget.value == 0) {
-                return;
-            }
-
-            const attribute = { 
-                id : event.currentTarget.getAttribute('id'),
-                name : event.currentTarget.getAttribute('name'),
-                value : event.currentTarget.value,
-            }         
-
+        setAttribute(id, attribute, variant, elem){ 
            let exist = false;
            for(let i = 0; i < this.attribute.length; i++){
-                   if(this.attribute[i].id === attribute.id) {
+                   if(this.attribute[i].id === id) {
                        exist = true;
-                       this.attribute[i].value = attribute.variant;                      
+                       this.attribute[i].variant = variant;                      
                    }
             }
             if(exist == false){
-                this.attribute.push(attribute)    
+                this.attribute.push({id : id, attribute : attribute, variant  : variant})    
             }             
-                     
+            // this.$store.dispatch('decrement',this.qty);               
         },
-        addToCart(){
-
-            this.axios.post('/set-cart-cookie');           
-            this.axios.post('/cart/add', {
-                    qty : this.qty, 
-                    attributes : this.attribute, 
-                    id : this.$route.params.item,         
-            })
+            // filter children and find buttons ( by component-type property )
+        // and inactive all .
+        inactiveAllButtons(){
+            var buttons = this.$children.filter(function(child) {
+                return child.$attrs['variant-name'] === 'variants';
+            });
+            for(var i = 0 ; i < buttons.length ; i++ ){
+            buttons[i].isActive = false;
         }
-
+      }
 
 
     },
     created () {  
-        this.$store.dispatch('getProduct',this.$route.params.item),
-        this.axios.get('/cart').then(response=>{
-            console.log(response);
-        })       
+        this.$store.dispatch('getProduct',this.$route.params.item)        
        
     },  
     computed : {
@@ -135,33 +121,29 @@ import Variant1 from '../components/Variant.vue';
                     <ul class="mt-4">
                         <li v-for="item in variants" class="mb-4">
                             <span class="relative block capitalize mb-2">{{ item.attributeName}}:</span>
-                            <select @change="setAttribute($event)" :name="item.attributeName" :id="item.id"  class="capitalize w-full text-dark  bg-transparent border border-dark md:w-1/2 p-2">
-                                 <option value="0">Choose an option</option>
-                                 <option v-for="variant in item.items">{{variant}}</option>
-                            </select>
-                            <!-- <ul class="flex gap-4">
-                              
+                            <ul class="flex gap-4">
+                                <!-- <Variant  v-for="(variant,index) in item.items" :key="index" variant-name="variants" :name="variant"></Variant> -->
                                 <li v-for="(variant,index) in item.items" :key="index"  @click="setAttribute(item.id,item.attributeName,variant, $event)">                              
                                     <span class="flex items-center justify-center border border-gray-300  text-xs capitalize p-5 w-8 h-8"><label for="">{{variant}}</label></span>
                                 </li>                               
-                            </ul> -->
+                            </ul>
                         </li>                        
                     </ul>
-                    <div class="w-[140px] h-[45px] flex flex-row border border-dark mt-8">
-                        <span  @click="decrement" class="w-[45px] text-dark  flex justify-center items-center p-2">
+                    <div class="w-[140px] h-[45px] flex flex-row border border-gray-200 mt-8">
+                        <span  @click="decrement" class="w-[45px]  flex justify-center items-center p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
                             </svg>
                         </span>
                         <input type="text" class="!w-[calc(100%_-_90px)]  text-center px-2   !border-0 " v-model="qty"  alt="">
-                        <span @click="increment" class="w-[45px] text-dark  flex justify-center items-center">
+                        <span @click="increment" class="w-[45px] flex justify-center items-center">
                              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"  fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
                         </span>
                     </div>
                     <br>
-                    <button @click.prevent="addToCart" class="btn sm:!w-full md:!w-full uppercase">Add to Cart</button>
+                    <button class="btn !w-full uppercase">Add to Cart</button>
 
                 </div>
             </div>

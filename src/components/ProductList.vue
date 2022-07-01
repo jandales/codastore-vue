@@ -1,4 +1,6 @@
 <script>
+    import currency from '../libraries/currency'
+    import Item from './Item.vue';
 
     export default {
         props: {
@@ -10,11 +12,11 @@
             }
         },
         methods : {
-            getCollection() {
-                this.$store.dispatch('collection');                  
+           async getCollection() {
+                await this.$store.dispatch('collection');                  
             },
-            getProducts(collectionName, sortBy, link){              
-                this.$store.dispatch('getProducts', { collection : collectionName  , sort : sortBy, link : link }); 
+           async getProducts(collectionName, sortBy, link){              
+                await this.$store.dispatch('getProducts', { collection : collectionName  , sort : sortBy, link : link }); 
             },           
             onChange(event){
                  let name = this.$route.params.name;
@@ -31,27 +33,33 @@
         },
         computed : {
             products(){
-                return this.$store.getters.products
+                return this.$store.getters.products.filter(product => {
+                    return product.regular_price = currency.format(product.regular_price);
+                })
             },
             pagination(){
                 return this.$store.getters.pagination
             },
-            collection(){
-                return this.$store.getters.collection
+            collection(){               
+                const list = this.$store.getters.collection;          
+                list.unshift({id:0, name : 'All Collection', slug : 'all'})               
+                return list;
             },
             links() {
                return this.pagination.links
                         .filter( (link) => {
-                            if(link.label == '&laquo; Previous')                    
-                                link.label = "Previous";                        
-                            if (link.label == 'Next &raquo;')
-                                link.label = "Next";                            
+                            if(!isNaN(link.label))
+                            // if(link.label == '&laquo; Previous')                    
+                            //     link.label = "Previous";                        
+                            // if (link.label == 'Next &raquo;')
+                            //     link.label = "Next";                            
                             return link;                          
                         })
             }
 
            
         },
+        components : { Item }
     
    
        
@@ -63,18 +71,14 @@
    <div class="block py-14">
             <h1 class="block text-left text-xl uppercase">{{collectionName == 'all' || null ? 'All Collection' : collectionName }}</h1>           
    </div>
-   <div class="flex">
- 
+   <div class="flex"> 
             <ul class="flex gap-4">
-                <li><router-link  to="/shop/collection/all" class="text-sm capitalize hover:underline" @click="getProducts('all')">All Collection</router-link></li>
-                <li v-for="item in collection" :key="item.id"><router-link :to="`/shop/collection/${item.name}`" @click="getProducts(item.name)" class="text-sm capitalize hover:underline" >{{item.name}} </router-link></li>
-
-                
+                <li v-for="item in collection" :key="item.id"><router-link :to="`/shop/collection/${item.slug}`" @click="getProducts(item.slug)" class="text-sm capitalize hover:underline" >{{item.name}} </router-link></li>
             </ul>
             <div class="flex justify-center items-center ml-auto">
                 <span class="text-sm">Sort By :</span>
                 <div class="flex">            
-                    <select name="sort_by" @change="onChange($event)"  class="pr-6 text-sm" id="SortBy">
+                    <select name="sort_by" @change="onChange($event)"  class="pr-6 text-sm bg-transparent" id="SortBy">
                         <option value="featured" :selected="optionsSelected == 'featured'">Featured</option>                
                         <option value="title-ascending" :selected="optionsSelected == 'title-ascending'" >Alphabetically, A-Z</option>
                         <option value="title-descending" :selected="optionsSelected == 'title-descending'" >Alphabetically, Z-A</option>
@@ -88,29 +92,12 @@
             </div>
    </div>
    <div class="block mt-8">    
-        <div class="flex flex-wrap gap-4">        
-            <div v-for="item in products" class="product-item">
-               <router-link  :to="{ name: 'collections-item', params: { item : item.slug }}">
-                    <div class="relative  overflow-hidden">
-                        <img :src="baseApi+item.imagePath"                   
-                        class="full-width transition ease-in-out  hover:scale-110  duration-300"    alt=""/>
-                    </div>
-                    <div class="flex justify-between py-4">
-                        <div>
-                            <label  class="name">{{ item.name }}</label>
-                            <label  class="collection">{{ item.category.name }}</label>
-                        </div>
-                        <div class="flex justify-center items-center">
-                            <span class="capitalize text-sm text-black font-bold">{{ item.regular_price }}</span>
-                        </div>
-                    </div>
-               </router-link>
-            </div>           
+        <div class="flex flex-wrap gap-4"> 
+            <Item v-for="item in products" :product="item"></Item> 
         </div>
    </div>
    <div class="flex gap-2 justify-center mb-8">
-    
-        <button v-for="(link, index) in links" :key="index"  @click="getProducts(null, null, link.url)"   class="px-4 py-2 border bg-lightGray border-[#333] cursor-pointer font-semibold" :class="{'bg-dark text-white' : link.active}">            
+        <button v-for="(link, index) in links" :key="index"  @click="getProducts(null, null, link.url)"   class="px-3 py-1 border text-sm bg-lightGray border-[#333] cursor-pointer hover:bg-dark hover:text-white" :class="{'bg-dark text-white' : link.active}">            
             {{ link.label }}
         </button>     
    </div>

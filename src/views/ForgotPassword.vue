@@ -1,6 +1,6 @@
 <script></script>
 <template>  
-      
+    <div class="flex  items-center justify-center h-[calc(100vh_-_100px)]">
            <div class="w-full md:w-[420px] px-4 mx-auto md:px-0">
              <div class="p-8">
                  <h1 class="block text-[2rem] text-center">Recover your password</h1>
@@ -17,5 +17,6 @@
                  </small>
                 </div>   
            </div> 
+      </div>
  
 </template>

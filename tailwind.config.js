@@ -17,6 +17,7 @@ module.exports = {
         'lightGray' : '#f5f5f5',
         'light' : "#777",
         'dark' : '#333',
+        'darkGray' : '#d0d0d0',
       },
       backgroundImage: {
       

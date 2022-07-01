@@ -9,14 +9,16 @@ import AlertSuccess from '../../alert/AlertSuccess.vue';
        }, 
 
         methods : {        
-            updateAddress() {
+           async updateAddress() {
                 this.errors = [];
                 this.isSuccess = false;
-                this.$store.dispatch('updateAddress',{ id: this.$route.params.id, address : this.address }) 
-                        .then(response => { if(response.status == 200 ) return this.isSuccess  =  true})              
-                        .catch(errors => {
-                            this.errors = errors.response.data.errors;
-                        })
+                try {
+                    await this.$store.dispatch('updateAddress',{ id: this.$route.params.id, address : this.address })
+                    this.isSuccess = true;
+                } catch (e) {
+                    this.errors = e.response.data.errors;
+                }             
+                     
             }
         },
         created() {
