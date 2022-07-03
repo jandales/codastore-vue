@@ -14,10 +14,7 @@ export default {
             ],
             isSearchOpen : false,
             isHomePage : true, 
-            isMenuOpen : false,      
-            DISPLAY_FLEX : 'flex',
-            DISPLAY_HIDDEN : 'hidden',          
-         
+            isMenuOpen : false, 
         };
     },
     methods: {
@@ -25,18 +22,26 @@ export default {
             this.isMenuOpen = this.isMenuOpen == true ? false : true;            
         },
         openCart() {
-            const modal = document.getElementById('modalCart');
-            modal.classList.replace(this.DISPLAY_HIDDEN, this.DISPLAY_FLEX);           
+            this.$store.dispatch('cartModalOpen', true);  
         },
         toggleSearch() {             
              this.isSearchOpen = this.isSearchOpen == true ? false : true;
         },
         
     }, 
+    computed : {
+        cartCount(){         
+            return this.$store.getters.cartCount;
+        }
+    },
+
 
      watch: {
             $route(to, from) {
                 this.isHomePage = to.name == 'home' ? true : false;  
+            },
+            cartCount(newvalue, oldvalue){             
+                return newvalue;
             }
     },
 
@@ -80,7 +85,7 @@ export default {
                 </div>
              
                <div class="flex gap-4">
-                    <span class="md:text-xs" @click="toggleSearch()">
+                    <span class="md:text-xs" @click="toggleSearch">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
@@ -102,10 +107,13 @@ export default {
                         </span>
                     </router-link>
 
-                    <span class="md:text-xs" @click="openCart()">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                        </svg>
+                    <span class="flex items-center justify-center cursor-pointer ">
+                        <span class="md:text-xs" @click="openCart">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                        </span>
+                       <span class="text-xs">({{cartCount}})</span>
                     </span>
                </div>
             </div>

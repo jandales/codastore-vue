@@ -9,6 +9,10 @@ export default {
 
     getters : {
         user : state => { return state.user },        
+        authenticated : () => {
+            if( localStorage.getItem('access_token') )  return true
+            return false   
+        }
     }, 
 
     actions : {

@@ -3,17 +3,16 @@
     import ProductReview from '../components/ProductReview.vue'
     import FeatureProduct from '../components/FeatureProduct.vue';
     import Variant from '../components/Variant.vue'
-import Variant1 from '../components/Variant.vue';
+
 
 
     export default{
+
     data() {
         return { 
-            qty : 1,
-            attribute : [],
+            qty : 1,      
             is_review_selected: false,    
-            activeTabClass: "bg-[#f5f5f5]",
-            selected : 0,
+            activeTabClass: "bg-[#f5f5f5]",        
         };
     },
     methods : {
@@ -27,79 +26,76 @@ import Variant1 from '../components/Variant.vue';
             if(this.qty > 0) this.qty--;            
             this.$store.dispatch('decrement',this.qty);               
         },
-        setAttribute(event){            
-            if (event.currentTarget.value == 0) {
-                return;
-            }
+        setAttribute(event) {          
 
             const attribute = { 
-                id : event.currentTarget.getAttribute('id'),
+                id : parseInt(event.currentTarget.getAttribute('id')),
                 name : event.currentTarget.getAttribute('name'),
                 value : event.currentTarget.value,
             }         
+         
+            let exist = false;
 
-           let exist = false;
-           for(let i = 0; i < this.attribute.length; i++){
-                   if(this.attribute[i].id === attribute.id) {
-                       exist = true;
-                       this.attribute[i].value = attribute.variant;                      
-                   }
+            for (let i = 0; i < this.attribute.length; i++) {
+                if(this.attribute[i].id === attribute.id) {                                    
+                    this.attribute[i].value = attribute.value; 
+                    exist = true;                       
+                }
             }
-            if(exist == false){
-                this.attribute.push(attribute)    
-            }             
+
+            if (exist) return;
+
+            this.attribute.push(attribute) 
                      
         },
-        addToCart(){
-
+        addToCart(){                  
             this.axios.post('/set-cart-cookie');           
-            this.axios.post('/cart/add', {
+            const response = this.axios.post('/cart/add', {
                     qty : this.qty, 
                     attributes : this.attribute, 
-                    id : this.$route.params.item,         
-            })
+                    id : this.product.id,         
+            });
+
+            this.$store.dispatch('cart');           
+            this.$store.dispatch('cartModalOpen', true);         
+            
         }
-
-
-
     },
     created () {  
-        this.$store.dispatch('getProduct',this.$route.params.item),
-        this.axios.get('/cart').then(response=>{
-            console.log(response);
-        })       
-       
+        this.$store.dispatch('getProduct',this.$route.params.item)  
     },  
     computed : {
         product(){      
             return  this.$store.getters.product;
         },
-        variants() {
-
-            let newArray = [];
+        variants(){
+            let array = [];
             this.product.attributes.forEach(attribute => {
-                 newArray.push({id : attribute.attribute_id, attributeName : attribute.attributes.name, items : [] });                   
+                 array.push({id : attribute.attribute_id, name : attribute.attributes.name, items : [] });                   
             }); 
-
-            newArray.forEach(attribute => {      
+            array.forEach(attribute => {      
                 this.product.variants.forEach(variant => {  
                     if (attribute.id == variant.attribute_id) {
                         attribute.items.push(variant.name)  
                     }           
                 })           
             })  
-
-            return newArray;        
+            return array;        
         },
-        count(){
-            return this.$store.getters.count;
-        }      
+        attribute(){
+            let array = [];
+            if(this.variants.length != 0){
+                this.variants.forEach(item => {
+                    array.push({id : item.id, name : item.name, value : item.items.length == 0 ? null : item.items[0] });
+                })
+            }
+            return array;
+        }
     },
-    components: { ProductDescription, ProductReview, FeatureProduct, Variant, Variant1 },
+    components: { ProductDescription, ProductReview, FeatureProduct, Variant, },
 }
 </script>
-<template>
-
+<template>  
     <div class="container md:m-auto" v-if="product">
          <div class="w-full  p-4 mt-4 md:mt-16 md:p-0">
          <div class="flex flex-col md:flex-row">
@@ -134,9 +130,8 @@ import Variant1 from '../components/Variant.vue';
                     <p class="block mb-2">{{ product.short_description }}</p>
                     <ul class="mt-4">
                         <li v-for="item in variants" class="mb-4">
-                            <span class="relative block capitalize mb-2">{{ item.attributeName}}:</span>
-                            <select @change="setAttribute($event)" :name="item.attributeName" :id="item.id"  class="capitalize w-full text-dark  bg-transparent border border-dark md:w-1/2 p-2">
-                                 <option value="0">Choose an option</option>
+                            <span class="relative block capitalize mb-2">{{ item.name}}:</span>
+                            <select @change="setAttribute($event)" :name="item.name" :id="item.id"   class="capitalize w-full text-dark  bg-transparent border border-dark md:w-1/2 p-2">                         
                                  <option v-for="variant in item.items">{{variant}}</option>
                             </select>
                             <!-- <ul class="flex gap-4">

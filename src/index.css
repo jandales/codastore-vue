@@ -130,4 +130,8 @@ input[type="text"],input[type="email"],input[type="password"], input[type="numbe
   @apply absolute top-0  left-[-80%] h-screen w-[80%] bg-white flex flex-col gap-4  items-start p-8
           md:flex md:flex-row md:relative md:h-auto md:bg-transparent md:left-0 z-10 ease-in-out;
 }
+.container-min-height{
+  @apply min-h-[calc(100vh_-_100px)];
+}
+
  

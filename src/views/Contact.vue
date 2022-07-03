@@ -1,7 +1,7 @@
 <script></script>
 <template>  
       
-           <div class="w-full md:w-[768px] px-4 mx-auto md:px-0">
+           <div class="w-full md:w-[768px] px-4 mx-auto container-min-height md:px-0">
              <div class="py-8">
                  <h1 class="text-xl uppercase">Contact Us</h1>
             </div>

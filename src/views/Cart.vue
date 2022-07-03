@@ -116,7 +116,24 @@ export default {
             <label for="" class="block uppercase">Your Cart Is Empty</label>
             <router-link :to="{ name : 'shop.collection.name', params : { name : 'all' } }" class="btn  !block mx-auto mt-8">Continue Shopping</router-link>
         </div>
-      </div>    
+
+     <div class="flex justify-between w-full my-8">
+            <router-link :to="{ name: 'shop.collection.name', params : { name: 'all'}}">Continue shopping</router-link> 
+        <div class="flex flex-col justify-center gap-4">
+                <div class="flex justify-between">
+                    <span class="bold">Subtotal</span>
+                    <span>321312</span>
+                </div>
+                <span>Taxes and shipping calculated at checkout</span>
+                <router-link to="/checkout">
+                    <button class="btn btn-dark !w-full">CHECK OUT</button>
+                </router-link>
+            </div>
+        
+        </div>
+
+      </div>   
       
+       
     </div>
 </template>

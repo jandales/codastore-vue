@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import address from './modules/address';
 import Cart from './modules/Cart';
+import checkout from './modules/checkout';
 import collections from './modules/collections';
 import counter from './modules/counter';
 import LoginModules from './modules/login';
@@ -22,6 +23,7 @@ export default createStore ({
        user : user,
        register : register,
        counter : counter,
-       cart : Cart
+       cart : Cart,
+       checkout : checkout
     },
 });

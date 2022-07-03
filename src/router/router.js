@@ -21,6 +21,11 @@ import AddressCreate from '../components/accounts/address/AddressCreate.vue'
 import AddressEdit from '../components/accounts/address/AddressEdit.vue'
 import Logout from '../views/Logout.vue'
 import Dashboard from '../components/accounts/Dashboard.vue'
+import Checkout from '../views/Checkout.vue'
+import About from '../views/About.vue'
+import Information from '../components/checkout/Information.vue'
+import Shipping from '../components/checkout/Shipping.vue'
+import Payment from '../components/checkout/Payment.vue'
 
 import middleware  from './middleware'
 
@@ -73,6 +78,14 @@ const router = createRouter({
         }, 
 
         { 
+            path: '/about',
+
+            name : 'about',
+
+            component : About,
+        }, 
+
+        { 
             path: '/cart',
 
             name : 'cart',
@@ -110,6 +123,26 @@ const router = createRouter({
             beforeEnter : middleware.guest,
         },
 
+        {
+            path : '/checkout',
+
+            name : 'checkout',
+
+            component : Checkout,
+
+            beforeEnter:  middleware.user, 
+            
+            children : [
+
+                { path : '', name : 'checkout.information', component : Information},
+
+                { path : 'shipping', name : 'checkout.shipping', component : Shipping },
+                
+                { path : 'payment', name : 'checkout.payment', component : Payment}
+            ]
+
+        },
+
         {   
             path : '/logout',
         
@@ -128,7 +161,7 @@ const router = createRouter({
 
             children : [
 
-                { path : 'dashboard', name : 'dashboard', component: Dashboard },
+                { path : '', name : 'dashboard', component: Dashboard },
 
                 { path : 'profile', component: UserProfile },
 

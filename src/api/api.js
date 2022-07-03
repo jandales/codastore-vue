@@ -108,6 +108,9 @@ export default {
     getCart(){
         return axios.get('/cart');
     },
+    getCartCount(){
+        return axios.get('/cart/count');
+    },
     updateCartQty(id, quantity){
         return axios.patch(`/cart/${id}`, { quantity : quantity });
     },

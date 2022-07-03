@@ -4,7 +4,7 @@
 
 </script>
 <template>  
-    <Collection></Collection>
+    <!-- <Collection></Collection> -->
     <FeatureProduct></FeatureProduct>
   
 </template>

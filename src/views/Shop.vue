@@ -2,7 +2,7 @@
     import ProductList from "../components/ProductList.vue";
 </script>
 <template>
-    <div class="container md:mx-auto">  
+    <div class="container md:mx-auto container-min-height">  
         <ProductList :collectionName="$route.params.name"></ProductList>
     </div>
 </template>
