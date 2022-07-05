@@ -116,6 +116,29 @@ export default {
     },
     deleteCartItem(id){
         return axios.delete(`/cart/item/${id}`);
+    },
+    getShippingMethods(){
+        return axios.get('/shipping-methods')
+    },
+    getShippingMethod(id){
+        return axios.get(`/shipping-methods/${id}`)
+    },   
+
+    checkout(){
+        return axios.get('/checkout');
+    },
+    checkoutInfomationStore(params){
+        return axios.post('/checkout',params);
+    },
+    checkoutShipping(){
+        return axios.get('/checkout/shipping');
+    },
+    checkoutUpdateShippingMethod(body){
+        return axios.put('/checkout/shipping/update', body);
+    },
+
+    placeOrder(body){
+        return axios.post('/checkout/placeorder',body)
     }
     
 

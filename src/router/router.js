@@ -26,6 +26,7 @@ import About from '../views/About.vue'
 import Information from '../components/checkout/Information.vue'
 import Shipping from '../components/checkout/Shipping.vue'
 import Payment from '../components/checkout/Payment.vue'
+import Completed from '../components/checkout/Completed.vue'
 
 import middleware  from './middleware'
 
@@ -130,7 +131,7 @@ const router = createRouter({
 
             component : Checkout,
 
-            beforeEnter:  middleware.user, 
+            beforeEnter:  [middleware.user,  middleware.checkout],
             
             children : [
 
@@ -138,7 +139,9 @@ const router = createRouter({
 
                 { path : 'shipping', name : 'checkout.shipping', component : Shipping },
                 
-                { path : 'payment', name : 'checkout.payment', component : Payment}
+                { path : 'payment', name : 'checkout.payment', component : Payment },
+
+               
             ]
 
         },
@@ -183,9 +186,15 @@ const router = createRouter({
                 
             ]
         },
+
+        { path : '/order/confirmed', name : 'order.confirmed', component : Completed }
        
 
-    ]
+    ],
+    scrollBehavior(to, from, savedPosition) {
+        // always scroll to top
+        return { top: 0 }
+      },
 
 })
 

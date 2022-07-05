@@ -9,6 +9,7 @@ import orders from './modules/orders';
 import paymentOptions from './modules/paymentOptions';
 import ProductModules from './modules/products'
 import register from './modules/register';
+import shippingMethod from './modules/shippingMethod';
 import user from './modules/user';
 
 
@@ -24,6 +25,7 @@ export default createStore ({
        register : register,
        counter : counter,
        cart : Cart,
-       checkout : checkout
+       checkout : checkout,
+       shippingMethod : shippingMethod
     },
 });

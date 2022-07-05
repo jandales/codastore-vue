@@ -63,7 +63,8 @@ export default {
             <h1 class="block text-center text-xl uppercase" :class="{'text-left':cart.items.length}">Your Cart</h1>
          </div>
 
-        <table v-if="cart.items.length" class="w-full table">
+        <div v-if="cart.items.length" class="w-full">
+              <table  class="w-full table">
             <thead>
                 <tr>
                     <th class="text-left">Product</th>
@@ -112,12 +113,7 @@ export default {
               
              </tbody>
         </table>
-        <div v-else class="block text-center tracking-widest">
-            <label for="" class="block uppercase">Your Cart Is Empty</label>
-            <router-link :to="{ name : 'shop.collection.name', params : { name : 'all' } }" class="btn  !block mx-auto mt-8">Continue Shopping</router-link>
-        </div>
-
-     <div class="flex justify-between w-full my-8">
+         <div class="flex justify-between w-full my-8">
             <router-link :to="{ name: 'shop.collection.name', params : { name: 'all'}}">Continue shopping</router-link> 
         <div class="flex flex-col justify-center gap-4">
                 <div class="flex justify-between">
@@ -131,6 +127,13 @@ export default {
             </div>
         
         </div>
+        </div> 
+        <div v-else class="block text-center tracking-widest">
+            <label for="" class="block uppercase">Your Cart Is Empty</label>
+            <router-link :to="{ name : 'shop.collection.name', params : { name : 'all' } }" class="btn  !block mx-auto mt-8">Continue Shopping</router-link>
+        </div>
+
+   
 
       </div>   
       
