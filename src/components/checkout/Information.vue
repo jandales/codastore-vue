@@ -32,7 +32,7 @@ export default {
            }
         },
     },
-    mounted() {
+    created() {
         this.$store.dispatch('checkoutInformation');
     },
     computed :{
@@ -40,10 +40,10 @@ export default {
              return this.$store.getters.authenticated;
         },
         email(){
-            return this.$store.getters.email
+            return this.$store.getters.email;
         },  
         shipping(){
-            return this.$store.getters.shipping
+            return this.$store.getters.shipping;
         },
        
     },
@@ -51,9 +51,7 @@ export default {
 }
 </script>
 <template>
-
-
-             <form v-if="shipping">
+    <form v-if="shipping">
                    <div class="flex items-center mb-4">
                     <h1 class="capitalize text-lg tracking-wider">Contact information</h1>              
                     <label v-if="!isAuth"  class="block ml-auto" >Already have an account? <router-link to="/login">Log in</router-link></label>
@@ -105,17 +103,17 @@ export default {
                     <input type="text" v-model="shipping.phone" name="name" class="w-full box-border px-3 py-2 border  outline-none" placeholder="Phone">               
                     <SmallAlert :errors="errors.phone"></SmallAlert>
                 </div> 
-             </form>
-            <div class="flex items-center w-full">  
-                    <router-link to="/cart" class="flex items-center">
-                         <span >
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                            </svg>
-                        </span>
-                       <label for="" class="ml-2 cursor-pointer"> Return Cart</label>
-                    </router-link>
-               
-                <span  @click="continueToShipping" to="/fasf" class="block btn ml-auto">Continue</span>
-            </div>
+    </form>
+    <div class="flex items-center w-full">  
+            <router-link to="/cart" class="flex items-center">
+                    <span >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                    </svg>
+                </span>
+                <label for="" class="ml-2 cursor-pointer"> Return Cart</label>
+            </router-link>
+        
+        <button  @click="continueToShipping" to="/fasf" class="block btn ml-auto">Continue</button>
+    </div>
 </template>

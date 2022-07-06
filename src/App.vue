@@ -14,7 +14,16 @@ import CartModal from './components/CartModal.vue';
   },
   watch : {
       $route(to, from) {
-            this.ischeckout = to.name == 'checkout.information' || to.name == 'checkout.shipping'  || to.name == 'checkout.payment' ? true : false;  
+          // let checkoutpage = ['checkout.information', 'checkout.shipping', 'checkout.payment', 'order.confirmed'];
+         
+          // checkoutpage.forEach(page => {
+    
+          //   if(to.name == page){
+          //     this.ischeckout = true;
+          //   }
+          // })      
+   
+          this.ischeckout = to.name == 'checkout.information' || to.name == 'checkout.shipping'  || to.name == 'checkout.payment' || to.name == 'order.confirmed' ? true : false;  
       },
   },
   components : { Header, Footer, CartModal}
@@ -28,7 +37,7 @@ import CartModal from './components/CartModal.vue';
     <Header v-if="!ischeckout"></Header>
     <router-view></router-view>
     <Footer  v-if="!ischeckout"></Footer>
-    <CartModal></CartModal>
+    <CartModal v-if="!ischeckout"></CartModal>
 </template>
 
 <style>

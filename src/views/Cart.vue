@@ -57,7 +57,7 @@ export default {
 </script>
 <template>
 
-    <div class="container md:min-h-[calc(100vh_-_100px)] md:mx-auto">
+    <div v-if="cart" class="container md:min-h-[calc(100vh_-_100px)] md:mx-auto">
       <div class="w-[900px] mx-auto">
           <div class="block py-14">
             <h1 class="block text-center text-xl uppercase" :class="{'text-left':cart.items.length}">Your Cart</h1>

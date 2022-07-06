@@ -99,6 +99,9 @@ table tr td {
 .product-item .collection {
   @apply block capitalize text-sm tracking-wide pt-1;
 }
+.vertical-center{
+  @apply  m-0 absolute top-1/2  translate-y-[-50%];
+}
 
 input[type="text"],input[type="email"],input[type="password"], input[type="number"], input[type="date"], textarea{
   @apply border border-[#d0d0d0] outline-none text-sm p-2 w-full bg-transparent focus:border-black;

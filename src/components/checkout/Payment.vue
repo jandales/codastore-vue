@@ -21,14 +21,13 @@ export default {
 
             this.errors = [];
             try {                
-               const res = await this.$store.dispatch('placeOrder',body);
-               console.log(res);
+                const res = await this.$store.dispatch('placeOrder',body);        
+                const order = res.data.order;
+                window.location.href = `/order/${order.order_number}/confirmed`       
             } catch (e) {
                 if (e.response.status == 422){
                     this.errors = e.response.data.errors;
-                }  
-
-               
+                } 
             }
            
         },       
@@ -49,7 +48,7 @@ export default {
     <div>
         <Heading></Heading>  
         <div class="mt-8" v-if="card">
-           <h1 class="font-semibold text-lg">Payment</h1>           
+            <h1 class="block capitalize text-lg tracking-wider mb-4">Payment</h1>        
             <div class="credit-card mt-1 p-4 border">
                 <div class="flex justify-between mb-4">
                   <span class="block mt10">All Transactiion are secure and encrypted</span>
@@ -81,7 +80,7 @@ export default {
             </div>
         </div> 
         <div class="flex items-center w-full mt-8">
-            <router-link to="/checkout/completed" class="flex items-center">
+            <router-link to="/checkout/shipping" class="flex items-center">
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
@@ -89,7 +88,7 @@ export default {
                 </span>
                 <label for="" class="ml-2 cursor-pointer"> Return Shipping</label>
             </router-link>               
-            <span @click="placeOrder" class="block btn ml-auto">Place Order</span>
+            <button @click="placeOrder" class="block btn ml-auto">Place Order</button>
         </div>
     </div>
 </template>

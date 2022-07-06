@@ -2,8 +2,7 @@
 import currency from '../libraries/currency'
 export default {
     data(){    
-        return {
-            isOpen : true,  
+        return {        
             DISPLAY_FLEX : 'flex',
             DISPLAY_HIDDEN : 'hidden',
         }
@@ -132,7 +131,7 @@ export default {
                 </li>
             </ul>
 
-            <div class="flex flex-col md:flex-row w-full mt-auto gap-4 ">
+            <div v-if="cart.items" class="flex flex-col md:flex-row w-full mt-auto gap-4 ">
                 <router-link to="/cart" @click="close" class="w-full md:w-1/2"><button class="btn !w-full">View Cart</button></router-link>
                 <router-link to="/checkout" @click="close" class="w-full md:w-1/2"><button class="btn !w-full">Checkout</button></router-link>
          

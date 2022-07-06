@@ -187,7 +187,7 @@ const router = createRouter({
             ]
         },
 
-        { path : '/order/confirmed', name : 'order.confirmed', component : Completed }
+        { path : '/order/:ordernumber/confirmed', name : 'order.confirmed', component : Completed }
        
 
     ],

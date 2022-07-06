@@ -26,23 +26,20 @@ export default {
         },
         toggleSearch() {             
              this.isSearchOpen = this.isSearchOpen == true ? false : true;
-        },
-        
+        },        
     }, 
     computed : {
         cartCount(){         
             return this.$store.getters.cartCount;
         }
     },
-
-
-     watch: {
-            $route(to, from) {
-                this.isHomePage = to.name == 'home' ? true : false;  
-            },
-            cartCount(newvalue, oldvalue){             
-                return newvalue;
-            }
+    watch: {
+        $route(to, from) {
+            this.isHomePage = to.name == 'home' ? true : false;  
+        },
+        cartCount(newvalue, oldvalue){             
+            return newvalue;
+        }
     },
 
 

@@ -2,13 +2,25 @@
 
 import currency from '../libraries/currency'
     export default {
+        data(){
+            return {
+                coupon_code : null,
+            }
+        },
         methods : {
-            fetch(){
-                if(this.$route.name == 'checkout.completed'){
-                      this.$store.dispatch('getOrder',5)
-                      return;
-                }
+            fetch(){          
                 this.$store.dispatch('cart')
+            },
+            getCheckoutInformation(){
+               if(this.$route.name != 'checkout.information'){
+                    this.$store.dispatch('checkoutShipping');
+               }
+            },
+            async applyCoupon(){      
+                await this.$store.dispatch('applyCoupon', {coupon_code : this.coupon_code });
+            }, 
+            async removeCoupon(){
+                await this.$store.dispatch('removeCoupon');
             },  
             format(amount){
                 return currency.format(amount);
@@ -17,7 +29,8 @@ import currency from '../libraries/currency'
         },
         mounted() {
             this.fetch();
-            this.$store.dispatch('checkoutShipping');
+            this.$store.dispatch('getCoupon');
+            this.getCheckoutInformation();
           
         },
         computed : {
@@ -30,19 +43,27 @@ import currency from '../libraries/currency'
             isAuth(){              
                 return this.$store.getters.authenticated;
             },
-            shippingAmount(){       
-                if(this.$route.name == 'checkout.information')  return 0;
-                return this.$store.getters.activeShippingMethod.amount;
-            },
-            isCompleted(){
-                return this.$route.name == 'checkout.completed' ? true : false;
-            },
-            summary(){
-                 return this.$route.name == 'checkout.completed' ? this.$store.getters.order :  null;   
+            shippingAmount(){     
+                const shippingMethod = this.$store.getters.activeShippingMethod;  
+
+                if(this.$route.name == 'checkout.information' || shippingMethod ==  null)  return 0;            
                
-            }
-             
-            
+                return shippingMethod.amount;
+            },  
+            coupon(){
+                const data = this.$store.getters.coupon;
+                if(data){
+                    return data;
+                }
+                return null;
+            }, 
+            total(){
+                const discount  = this.coupon != null ? this.coupon.amount : 0;
+                const subtotal = this.subtotal;
+                const shippingCharge = this.shippingAmount;
+                return (subtotal + shippingCharge) - discount;
+                
+            }   
         }   
     }
 </script>
@@ -53,18 +74,18 @@ import currency from '../libraries/currency'
           <div class="flex">
             <div class="w-3/5 pr-16 py-8">
                 <h1 class="block text-center text-[3rem] font-bold tracking-widest">ETTO APPAREAL</h1>
-                <ul v-if="!isCompleted" class="flex justify-center gap-2  my-8">
-                    <li class="cursor-pointer"><router-link to="/cart">Cart</router-link></li>
+                <ul  class="flex justify-center gap-2  my-8">
+                    <li>Cart</li>
                     <li>></li>
-                    <li class="cursor-pointer" :class="{'font-bold' : this.$route.name == 'checkout.information'}"><router-link to="/checkout">Information</router-link></li>
+                    <li :class="{'font-bold' : this.$route.name == 'checkout.information'}">Information</li>
                     <li>></li>
-                    <li class="cursor-pointer" :class="{'font-bold' : this.$route.name == 'checkout.shipping'}"><router-link to="/checkout/shipping">Shipping</router-link></li>
+                    <li :class="{'font-bold' : this.$route.name == 'checkout.shipping'}">Shipping</li>
                     <li>></li>
-                    <li class="cursor-pointer" :class="{'font-bold' : this.$route.name == 'checkout.payment'}"><router-link to="/checkout/payment">Payment</router-link></li>           
+                    <li :class="{'font-bold' : this.$route.name == 'checkout.payment'}">Payment</li>           
                 </ul>
                 <router-view></router-view> 
             </div>
-            <div class="w-2/5 pl-12 py-8 border-l" >
+            <div class="w-2/5 pl-12 py-8 border-l min-h-screen" >
                <div>
                     <ul class="block mt-4">
                    <li  v-for="item in cartItems" class="block mb-8">
@@ -87,14 +108,22 @@ import currency from '../libraries/currency'
                 </li>
                </ul>
                <div class="block border-b"></div>
-               <div class="flex gap-4 my-6">
-                    <input type="text" id="coupon_code" validator-input="coupon_code" name="coupon_code" placeholder="Coupon Code">
-                    <button id="btn-coupon-apply" class="btn btn-dark w-3">Apply</button>   
+               <div v-if="!coupon" class="flex gap-4 my-6">
+                    <input type="text" id="coupon_code" v-model="coupon_code" name="coupon_code" placeholder="Coupon Code">
+                    <button  @click="applyCoupon" id="btn-coupon-apply" class="btn btn-dark w-3">Apply</button>            
+                </div>
+                <div  v-else class="flex gap-4 my-6">
+                    <input type="text" id="coupon_code" v-model="coupon.name" name="coupon_code" placeholder="Coupon Code" disabled>                
+                    <button  @click="removeCoupon(coupon.id)"  id="btn-coupon-apply" class="btn !bg-rose-500 w-3">Remove</button> 
                 </div>
                 <div class="block border-b"></div>
                 <div class="flex justify-between  my-4">
                     <span>Subtotal</span>
                     <span  id="subtotal">{{ format(subtotal)}}</span>
+                </div>
+                <div v-if="coupon" class="flex justify-between  my-4">
+                    <span>Discount</span>
+                    <span  id="subtotal">{{ format(coupon.amount)}}</span>
                 </div>
                 <div class="flex justify-between  my-4">
                     <span>Shipping</span>
@@ -104,13 +133,10 @@ import currency from '../libraries/currency'
                 <div class="block border-b"></div>
                 <div class="flex justify-between  my-4">
                     <span>Total</span>
-                    <span class="text-lg font-bold">{{  format((subtotal + parseInt(shippingAmount))) }}</span>
+                    <span class="text-lg font-bold">{{  format( total) }}</span>
                 </div>
                </div>
-               {{summary}}
-               <div v-if="summary">
- 
-               </div>
+              
             </div>
        </div>
      </div>

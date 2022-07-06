@@ -43,7 +43,9 @@ export default {
  
     <div>
       <Heading></Heading>
+    
         <div class="mt-8">
+                <h1 class="block capitalize text-lg tracking-wider mb-4">Shipping Method</h1>  
             <ul v-if="shippingMethods">
                 <li v-for="(method, index) in shippingMethods"  class="flex border p-4 border-b-0" :class="{'!border-b': index == (shippingMethods.length -1)}">
                     <div class="flex" v-if="method">
@@ -64,7 +66,7 @@ export default {
                        <label for="" class="ml-2 cursor-pointer"> Return Information</label>
                     </router-link>
                
-                <span  @click="updateShippingMethod(shippingMethod)" class="block btn ml-auto">Continue</span>
+                <button  @click="updateShippingMethod(shippingMethod)" class="block btn ml-auto">Continue</button>
             </div>
     </div>
 </template>

@@ -4,6 +4,7 @@ import Cart from './modules/Cart';
 import checkout from './modules/checkout';
 import collections from './modules/collections';
 import counter from './modules/counter';
+import coupon from './modules/coupon';
 import LoginModules from './modules/login';
 import orders from './modules/orders';
 import paymentOptions from './modules/paymentOptions';
@@ -26,6 +27,7 @@ export default createStore ({
        counter : counter,
        cart : Cart,
        checkout : checkout,
-       shippingMethod : shippingMethod
+       shippingMethod : shippingMethod,
+       coupon : coupon
     },
 });

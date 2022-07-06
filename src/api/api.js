@@ -105,6 +105,9 @@ export default {
     getOrder(id) {
         return axios.get(`/user/orders/${id}`)        
     },
+    getOrderByNumber(number) {
+        return axios.get(`/user/orders/order-number/${number}`)        
+    },
     getCart(){
         return axios.get('/cart');
     },
@@ -122,8 +125,7 @@ export default {
     },
     getShippingMethod(id){
         return axios.get(`/shipping-methods/${id}`)
-    },   
-
+    },
     checkout(){
         return axios.get('/checkout');
     },
@@ -139,6 +141,15 @@ export default {
 
     placeOrder(body){
         return axios.post('/checkout/placeorder',body)
+    },
+    applyCoupon(body){ 
+        return axios.post('/cart/apply-coupon', body);
+    },
+    getCoupon(){ 
+        return axios.get('/cart/coupon');
+    },
+    removeCoupon(){ 
+        return axios.delete(`/cart/remove-coupon`);
     }
     
 

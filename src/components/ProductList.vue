@@ -48,11 +48,7 @@
             links() {
                return this.pagination.links
                         .filter( (link) => {
-                            if(!isNaN(link.label))
-                            // if(link.label == '&laquo; Previous')                    
-                            //     link.label = "Previous";                        
-                            // if (link.label == 'Next &raquo;')
-                            //     link.label = "Next";                            
+                            if(!isNaN(link.label))                                                       
                             return link;                          
                         })
             }
