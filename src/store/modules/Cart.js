@@ -56,6 +56,7 @@ export default {
         async cart({commit}){
             const response = await api.getCart();
             commit('SET_ITEMS', response.data);
+            return response.data;
         },
         async updateCartQty({commit}, params){
             await api.updateCartQty(params.id, params.quantity);

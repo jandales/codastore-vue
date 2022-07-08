@@ -1,5 +1,10 @@
 <template>
-    <div class="flex justify-between items-center mb-4">
+      <loading v-model:active="this.$store.getters.isLoading"
+                    :can-cancel="true"
+                    :on-cancel="onCancel"
+                    :is-full-page="true"/>
+
+    <div  class="flex justify-between items-center mb-4">
         <h1 class="block tracking-widest font-bold">Card List</h1>
         <router-link  to="/account/payment-options/create" class="relative  btn btn-dark sm:w-max">Add Card</router-link>
     </div>
@@ -54,23 +59,34 @@
     </div>
 </template>
 <script>
-    export default {
-        data(){
-           return {
-              paymentOptions : null,   
-           }
-        },
+    export default {  
         methods : {
-          getPaymentOptions() {
-             this.$store.dispatch('getPaymentCards');         
+         async getPaymentOptions() {
+                this.$store.dispatch('isLoading', true); 
+            try {
+                await this.$store.dispatch('getPaymentCards');  
+            } finally {
+                this.$store.dispatch('isLoading', false); 
+            }                   
           },
-          destroy(id) {
-              this.$store.dispatch('deleteCard',id);
-              this.getPaymentOptions();
+         async destroy(id) {
+             this.$store.dispatch('isLoading', true);
+              try {
+                  await this.$store.dispatch('deleteCard',id);
+                  await this.getPaymentOptions();
+              } finally {
+                this.$store.dispatch('isLoading', false);
+              }
+             
           },
-          setAsDefault(id) {
-             this.$store.dispatch('setDefaulCard',id);
-             this.getPaymentOptions();
+         async setAsDefault(id) {
+              this.$store.dispatch('isLoading', true);
+              try {
+                  await this.$store.dispatch('setDefaulCard',id);
+                  await this.getPaymentOptions();
+              }finally{
+                  this.$store.dispatch('isLoading', false);
+              }          
           }
         },
         mounted() {

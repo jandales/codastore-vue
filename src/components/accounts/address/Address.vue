@@ -1,4 +1,8 @@
 <template>
+ <loading v-model:active="this.$store.getters.isLoading"
+                    :can-cancel="true"
+                    :on-cancel="onCancel"
+                    :is-full-page="true"/>
     <div class="flex justify-between items-center mb-4">
         <h1 class="block tracking-widest font-bold">Address</h1>
         <router-link  to="/account/address/create" class="relative btn btn-dark sm:w-max">Add Address</router-link>
@@ -52,8 +56,14 @@
            }
         },
         methods : {
-          getAddressList() {
-            this.$store.dispatch('getAddresses');       
+          async getAddressList() {
+             this.$store.dispatch('isLoading', true); 
+            try {
+                await this.$store.dispatch('getAddresses'); 
+            } finally {
+               this.$store.dispatch('isLoading', false); 
+            }
+                 
           },
           destroy(id) {
             this.$store.dispatch('deleteAddeess',id);

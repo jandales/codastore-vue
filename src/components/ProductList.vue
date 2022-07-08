@@ -1,22 +1,31 @@
 <script>
     import currency from '../libraries/currency'
     import Item from './Item.vue';
+ 
+
 
     export default {
         props: {
             collectionName : String
         },
         data() {
-            return {      
+            return {  
+                isLoading : false,    
                 optionsSelected : this.$route.params.keyword,                
             }
         },
-        methods : {
-           async getCollection() {
-                await this.$store.dispatch('collection');                  
-            },
-           async getProducts(collectionName, sortBy, link){              
-                await this.$store.dispatch('getProducts', { collection : collectionName  , sort : sortBy, link : link }); 
+        methods : {         
+           async getProducts(collectionName, sortBy, link){
+                this.isLoading = true;
+                try {
+                    await this.$store.dispatch('collection');             
+                    await this.$store.dispatch('getProducts', { collection : collectionName  , sort : sortBy, link : link }); 
+                } catch (error) {
+                    
+                }finally {
+                    this.isLoading = false;
+                }
+               
             },           
             onChange(event){
                  let name = this.$route.params.name;
@@ -27,8 +36,7 @@
             }, 
         },
         
-        mounted() {
-            this.getCollection();
+        mounted() {        
             this.getProducts(this.collectionName, this.$route.params.keyword);
         },
         computed : {
@@ -64,8 +72,12 @@
 </script>
 <template>
 
-   <div class="block py-14">
-            <h1 class="block text-left text-xl uppercase">{{collectionName == 'all' || null ? 'All Collection' : collectionName }}</h1>           
+    <loading v-model:active="isLoading"               
+                 :is-full-page="true"/>
+
+  <div v-if="!isLoading">
+     <div class="block py-14">
+         <h1 class="block text-left text-xl uppercase">{{collectionName == 'all' || null ? 'All Collection' : collectionName }}</h1>           
    </div>
    <div class="flex"> 
             <ul class="flex gap-4">
@@ -97,5 +109,6 @@
             {{ link.label }}
         </button>     
    </div>
+  </div>
 
 </template>

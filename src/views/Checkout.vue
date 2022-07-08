@@ -1,9 +1,10 @@
 <script>
-
+import Button from '../components/forms/Button.vue'
 import currency from '../libraries/currency'
     export default {
         data(){
             return {
+                isLoading : false,
                 coupon_code : null,
             }
         },
@@ -16,11 +17,22 @@ import currency from '../libraries/currency'
                     this.$store.dispatch('checkoutShipping');
                }
             },
-            async applyCoupon(){      
-                await this.$store.dispatch('applyCoupon', {coupon_code : this.coupon_code });
+            async applyCoupon(){   
+                try{
+                     this.isLoding= true;
+                     await this.$store.dispatch('applyCoupon', {coupon_code : this.coupon_code });
+                }finally{
+                    this.isLoding= false;
+                }
+               
             }, 
             async removeCoupon(){
-                await this.$store.dispatch('removeCoupon');
+                try {
+                    this.isLoding= true;
+                    await this.$store.dispatch('removeCoupon');
+                } finally {
+                    this.isLoding= false;
+                }              
             },  
             format(amount){
                 return currency.format(amount);
@@ -64,7 +76,8 @@ import currency from '../libraries/currency'
                 return (subtotal + shippingCharge) - discount;
                 
             }   
-        }   
+        },
+        components : { Button }   
     }
 </script>
 <template>
@@ -110,11 +123,11 @@ import currency from '../libraries/currency'
                <div class="block border-b"></div>
                <div v-if="!coupon" class="flex gap-4 my-6">
                     <input type="text" id="coupon_code" v-model="coupon_code" name="coupon_code" placeholder="Coupon Code">
-                    <button  @click="applyCoupon" id="btn-coupon-apply" class="btn btn-dark w-3">Apply</button>            
+                    <Button @click="applyCoupon" :isLoading="isLoading" :btntext="'Apply'"  class="btn btn-dark md:w-max"></Button>                               
                 </div>
                 <div  v-else class="flex gap-4 my-6">
-                    <input type="text" id="coupon_code" v-model="coupon.name" name="coupon_code" placeholder="Coupon Code" disabled>                
-                    <button  @click="removeCoupon(coupon.id)"  id="btn-coupon-apply" class="btn !bg-rose-500 w-3">Remove</button> 
+                    <input type="text" id="coupon_code" v-model="coupon.name" name="coupon_code" placeholder="Coupon Code" disabled>
+                    <Button @click="removeCoupon(coupon.id)" :isLoading="isLoading" :btntext="'Remove'"  class="btn !bg-rose-500 w-3"></Button>                                  
                 </div>
                 <div class="block border-b"></div>
                 <div class="flex justify-between  my-4">

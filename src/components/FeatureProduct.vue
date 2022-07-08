@@ -27,7 +27,7 @@
         </div>
 
         <div class="p-8  md:mb-12">
-             <a href="#" class=" inline-block  py-2 px-8 bg-black text-white tracking-widest"> View All</a>
+             <router-link to="/shop/collection/all" class=" inline-block  py-2 px-8 bg-black text-white tracking-widest"> View All</router-link>
         </div>
        
     </div>

@@ -85,7 +85,8 @@ export default {
 </script>
 <template>
 
-    <div id="modalCart" class="hidden w-full fixed top-0 left-0 min-h-screen  bg-black bg-opacity-50" :class="{'!flex' : isOpen}">
+
+    <div id="modalCart" class="hidden w-full fixed top-0 left-0 min-h-full bg-black bg-opacity-50" :class="{'!flex' : isOpen}">
         <div class="flex flex-col w-full md:w-1/3 right-[-33.333%] overflow-auto  min-h-screen border-l bg-[#f0f0f0]  fixed top-0  p-8 z-20  ease-in-out" :class="{'!right-0 ease-in-out ' : isOpen}">
             <div class="flex mb-8">
                 <h1 class="block text-center text-xl uppercase">Your Cart</h1>
@@ -96,7 +97,8 @@ export default {
                 </span>
             </div>
 
-            <ul v-if="cart" class="relative  h-[calc(100vh_-_200px)] overflow-y-scroll">
+          <div  v-if="cart">
+              <ul class="relative  h-[calc(100vh_-_200px)] overflow-y-auto">
                 <li  v-for="item in cartItems" class="block mb-8">
                     <div class="flex">
                         <figure class="bg-lightGray flex items-center  w-32  ">
@@ -132,10 +134,12 @@ export default {
             </ul>
 
             <div v-if="cart.items" class="flex flex-col md:flex-row w-full mt-auto gap-4 ">
+
                 <router-link to="/cart" @click="close" class="w-full md:w-1/2"><button class="btn !w-full">View Cart</button></router-link>
                 <router-link to="/checkout" @click="close" class="w-full md:w-1/2"><button class="btn !w-full">Checkout</button></router-link>
          
             </div>
+          </div>
          </div>
     </div>
 </template>

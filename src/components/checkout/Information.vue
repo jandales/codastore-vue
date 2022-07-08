@@ -7,6 +7,14 @@ export default {
         }
     },
     methods : {
+        async getInformation(){
+              this.$store.dispatch('isLoading', true); 
+           try {
+                await this.$store.dispatch('checkoutInformation');
+           } finally  {
+                this.$store.dispatch('isLoading', false);
+           }
+        },  
        async continueToShipping() { 
             this.errors = [];
             const body =  {
@@ -33,7 +41,7 @@ export default {
         },
     },
     created() {
-        this.$store.dispatch('checkoutInformation');
+        this.getInformation();
     },
     computed :{
         isAuth(){              
@@ -51,6 +59,11 @@ export default {
 }
 </script>
 <template>
+
+     <loading v-model:active="this.$store.getters.isLoading"
+                    :can-cancel="false"
+                    :on-cancel="onCancel"
+                    :is-full-page="true"/>
     <form v-if="shipping">
                    <div class="flex items-center mb-4">
                     <h1 class="capitalize text-lg tracking-wider">Contact information</h1>              

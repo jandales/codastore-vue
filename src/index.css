@@ -65,7 +65,7 @@ select{
 }
 
 .btn{
-  @apply bg-[#333] box-border text-sm text-white text-center tracking-widest font-normal  inline py-3 px-10 opacity-90 hover:opacity-100  w-full md:w-max;
+  @apply bg-[#333]  box-border text-sm text-white text-center tracking-widest font-semibold uppercase  inline py-3 px-10 opacity-90 hover:opacity-100  w-full md:w-max;
 }
 
 table tr th  {

@@ -60,7 +60,7 @@ export default {
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </span>
-                    <img src="../assets/logo.png"  height="100" width="100" alt="">
+                    <router-link to="/" ><img src="../assets/logo.png"  height="100" width="100" alt=""/></router-link>                   
                     <ul id="list-nav-wrapper" class="menu" :class="{'!left-[0]' : isMenuOpen}"
                                >
                         <div class="flex justify-between items-center w-full
@@ -118,7 +118,7 @@ export default {
             <!-- hero Image-->
             <div v-if="isHomePage" class="flex flex-col items-center justify-center absolute top-[50%] w-full translate-y-[-50%]">
                 <h1 class="text-white text-[3rem] md:text-[4rem]">Wear your Best Moments</h1>
-                <a href="#" class="font-semibold tracking-wide px-8 py-4 mt-8  rounded-sm bg-white text-slate-500 shadow-sm hover:text-slate-400">START SHOPPING NOW</a>
+                <router-link to="/shop/collection/all" class="font-semibold tracking-wide px-8 py-4 mt-8  rounded-sm bg-white text-slate-500 shadow-sm hover:text-slate-400">START SHOPPING NOW</router-link>
             </div>
         </div>
         

@@ -2,13 +2,21 @@
 import currency from '../../libraries/currency'
     export default {
         methods : {
+           async getOrderInfo(){
+                this.$store.dispatch('isLoading', true);
+                try {
+                   await this.$store.dispatch('getOrder',this.$route.params.ordernumber) 
+                } finally {
+                      this.$store.dispatch('isLoading', false);
+                }                 
+            },
             format(amount){
                 return currency.format(amount);
             }
             
         },
         mounted() {
-            this.$store.dispatch('getOrder',this.$route.params.ordernumber)           
+            this.getOrderInfo();        
         },
         computed : {    
       
@@ -19,6 +27,10 @@ import currency from '../../libraries/currency'
     }
 </script>
 <template >  
+ <loading v-model:active="this.$store.getters.isLoading"
+                    :can-cancel="false"
+                    :on-cancel="onCancel"
+                    :is-full-page="true"/>
     <div v-if="order" class="w-full min-h-screen bg-white">
         <div class="container md:mx-auto md:px-16">
             <div class="flex">

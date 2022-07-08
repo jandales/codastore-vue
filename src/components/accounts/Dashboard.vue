@@ -1,9 +1,19 @@
 <script>
-    export default {
+    export default {    
+      methods : {
+        async loadData(){  
+            this.$store.dispatch('isLoading', true); 
+           try {
+               await this.$store.dispatch('user'); 
+               await this.$store.dispatch('getDefaultAddress');
+               await this.$store.dispatch('getDefaultPaymentCard');
+            } finally {
+                 this.$store.dispatch('isLoading', false); 
+            }
+         }
+      },
       created(){
-            this.$store.dispatch('user'); 
-            this.$store.dispatch('getDefaultAddress');
-            this.$store.dispatch('getDefaultPaymentCard');
+           this.loadData();
       },
       computed :{
          user(){
@@ -23,8 +33,14 @@
 </script>
 <template>
     <div class="flex gap-8">
-         <div v-if="user"  class="flex flex-col w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray   py-2 px-4">  
-            
+
+        <loading v-model:active="this.$store.getters.isLoading"
+                 :can-cancel="true"
+                 :on-cancel="onCancel"
+                 :is-full-page="false"/>
+
+         <div v-if="option"  class="flex flex-col w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray   py-2 px-4">  
+         
             <div class="flex items-center gap-2 mb-2">             
                <label for="" class="capitalize font-semibold">Personal Profile</label>
                <label for="" class="capitalize">|</label>
@@ -48,7 +64,7 @@
 
         </div>
          
-        <div v-if="address" class="flex flex-col w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray   py-2 px-4"> 
+        <div v-if="option" class="flex flex-col w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray   py-2 px-4"> 
 
             <div class="flex items-center gap-2 mb-2">             
                <label for="" class="capitalize font-semibold">Default Shipping Address</label>

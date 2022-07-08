@@ -1,10 +1,26 @@
-
-
+<script>
+    export default  { 
+        methods : {
+            async logout(){
+                this.$store.dispatch('isLoading', true); 
+                try {
+                   await this.axios.delete('/user/logout')
+                    .then(response => { if (response.status === 200){
+                            localStorage.removeItem('access_token')
+                            localStorage.removeItem('user')
+                            this.$router.push({name : 'login'})                   
+                    }}); 
+                } finally {
+                    this.$store.dispatch('isLoading', false); 
+                } 
+            }
+        } ,      
+    }
+</script>
 <template>
-
     <div class="container min-h-[calc(100vh_-_100px)] md:mx-auto">
-        <div class="flex flex-col md:flex-row gap-8 md:gap-0 md:mt-8">           
-            <div class="account-sidebar">
+        <div class="flex flex-col  md:flex-row gap-8 md:gap-0 md:mt-8">           
+            <div class="account-sidebar h-max">
                 <div class="hidden md:flex gap-4 px-4 py-4">
                     <div class="relative rounded-full w-16 h-16 bg-[#f5f5f5] overflow-hidden">
                         <img src="../assets/avatar.jpg" alt="">
@@ -15,7 +31,7 @@
                     </div>
                    
                 </div>
-                 <router-link  to="/account/dashboard"  class="hover:bg-[#f4f4f4] underline-offset-2" >
+                 <router-link  to="/account"  class="hover:bg-[#f4f4f4] underline-offset-2" >
                     <div class="account-nav-item">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -66,7 +82,7 @@
                     <label class="tracking-widest">Shipping Address</label>
                     </div>
                 </router-link>
-                <router-link  :to="{name: 'logout'}"  class="hover:bg-[#f4f4f4]">
+                <span  @click="logout"  class="hover:bg-[#f4f4f4]">
                     <div class="account-nav-item">
                         <span>
                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -75,7 +91,7 @@
                         </span>
                     <label class="tracking-widest">Logout</label>
                     </div>
-                </router-link>
+                </span>
             </div>
             <div class="ml-0 md:ml-8 w-full">
                 <router-view></router-view>

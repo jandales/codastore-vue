@@ -4,7 +4,7 @@ import api from "../../api/api";
 export default { 
 
     state : {
-
+        user : null,
     },
 
     getters : {

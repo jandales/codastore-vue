@@ -10,6 +10,14 @@ export default {
         }
     },
     methods : { 
+        async getCard(){
+            this.$store.dispatch('isLoading', true)
+            try {
+                await this.$store.dispatch('getDefaultPaymentCard');
+            } finally {
+                 this.$store.dispatch('isLoading', false)
+            }
+        },
         async placeOrder() {
             const body = {
                is_new_billing : 0,
@@ -20,6 +28,7 @@ export default {
             }
 
             this.errors = [];
+            this.$store.dispatch('isLoading', true)
             try {                
                 const res = await this.$store.dispatch('placeOrder',body);        
                 const order = res.data.order;
@@ -28,12 +37,14 @@ export default {
                 if (e.response.status == 422){
                     this.errors = e.response.data.errors;
                 } 
+            }finally{
+                this.$store.dispatch('isLoading', false)
             }
            
         },       
     },
-    mounted() {  
-        this.$store.dispatch('getDefaultPaymentCard');
+    created() {  
+       this.getCard();
     },
     computed : { 
         card() {              
@@ -45,9 +56,13 @@ export default {
 
 </script>
 <template>
-    <div>
+   <loading v-model:active="this.$store.getters.isLoading"
+                    :can-cancel="false"
+                    :on-cancel="onCancel"
+                    :is-full-page="true"/>
+    <div v-if="card">
         <Heading></Heading>  
-        <div class="mt-8" v-if="card">
+        <div class="mt-8">
             <h1 class="block capitalize text-lg tracking-wider mb-4">Payment</h1>        
             <div class="credit-card mt-1 p-4 border">
                 <div class="flex justify-between mb-4">

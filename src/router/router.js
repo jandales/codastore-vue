@@ -164,13 +164,15 @@ const router = createRouter({
 
             children : [
 
-                { path : '', name : 'dashboard', component: Dashboard },
+                { path : '',  component: Dashboard },
 
                 { path : 'profile', component: UserProfile },
 
-                { path : 'orders', component : Orders },
+                { path : 'orders', name : 'orders', component : Orders },
 
-                { path : 'orders/:id/show', component : OrderShow },
+                { path : 'orders/:id/show', name:"order", component : OrderShow },
+
+                { path : 'orders/sort=:status', component : Orders },
 
                 { path : 'payment-options', component : PaymentOptions },
 

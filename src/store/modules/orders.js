@@ -26,5 +26,9 @@ export default {
             const repsonse = await api.getOrder(payload);
             commit('SET_ORDER', repsonse.data);  
         },
+        async cancelOrder({commit}, payload){
+            const repsonse = await api.cancelOrder(payload);
+            commit('SET_ORDER', repsonse.data);  
+        },
     }
 }

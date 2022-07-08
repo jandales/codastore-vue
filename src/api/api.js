@@ -105,6 +105,9 @@ export default {
     getOrder(id) {
         return axios.get(`/user/orders/${id}`)        
     },
+    cancelOrder(id){
+        return axios.patch(`/user/orders/cancel/${id}`)
+    },
     getOrderByNumber(number) {
         return axios.get(`/user/orders/order-number/${number}`)        
     },
@@ -150,7 +153,11 @@ export default {
     },
     removeCoupon(){ 
         return axios.delete(`/cart/remove-coupon`);
+    },
+    sendMessage(body){
+        return axios.post('/contact/send-message', body);
     }
+
     
 
 

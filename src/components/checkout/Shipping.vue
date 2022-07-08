@@ -8,6 +8,15 @@ export default {
         };
     },
     methods: {
+        async getShippingMethods(){
+            this.$store.dispatch('isLoading', true);
+             try {
+                 await this.$store.dispatch("getShippingMethods");
+             } finally {
+                 this.$store.dispatch('isLoading', false);
+             }            
+        }
+        ,
         changeShippingMethod(data) {
             this.$store.dispatch("updateShippingMethod", data);
         },
@@ -25,7 +34,8 @@ export default {
         }
     },
     mounted() {
-        this.$store.dispatch("getShippingMethods");
+        this.getShippingMethods()
+        
     },
     computed: {
         shippingMethods() {
@@ -41,7 +51,13 @@ export default {
 </script>
 <template>
  
-    <div>
+   <loading v-model:active="this.$store.getters.isLoading"
+                    :can-cancel="false"
+                    :on-cancel="onCancel"
+                    :is-full-page="true"/>
+
+
+    <div v-if="shippingMethods">
       <Heading></Heading>
     
         <div class="mt-8">

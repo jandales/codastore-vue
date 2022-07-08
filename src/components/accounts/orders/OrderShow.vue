@@ -1,26 +1,30 @@
 <script>
+import Button from '../../forms/Button.vue';
  export default {
-    data() {
-        return {
-            order : null,
-        }        
-    },
-    methods : {
-        getOrder() {
-            this.$store.dispatch('getOrder',this.$route.params.id)
+    methods: {
+        async getOrder() {
+           await this.$store.dispatch("getOrder", this.$route.params.id);
+        },
+        async cancel() {
+            await this.$store.dispatch("isLoading", true);
+            try {
+                await this.$store.dispatch("cancelOrder", this.$route.params.id);
+            } 
+            finally {
+               await this.$store.dispatch("isLoading", false);
+            }
         }
     },
     created() {
-        this.getOrder();       
+        this.getOrder();
     },
-    computed : {
+    computed: {
         order() {
             return this.$store.getters.order;
         }
-    }
- 
-  
- }
+    },
+    components: { Button }
+}
 
 </script>
 <template>
@@ -90,13 +94,13 @@
                  <span>₱{{ order.shipping_charge }}</span>
             </div>
 
-            <div class="row justify-between mb-2">
+             <div class="row justify-between mb-2">
                 <span class="font-semibold">Tax</span>
                  <span>₱{{ order.tax_total }}</span>
             </div>
-         
+        
             <div class="row justify-between mb-2">
-                <span class="font-semibold">Coupon</span>
+                <span class="font-semibold">Discount</span>
                  <span>₱ {{ order.coupon_amount }}</span>
             </div>
 
@@ -107,6 +111,9 @@
                  <span>₱{{order.gross_total}}</span>
             </div>
            
+           <div v-if="order.status == 'confirmed'" class="row justify-between mt-8">
+                <Button @click="cancel"  :isLoading="this.$store.getters.isLoading" :btntext="'Cancel Order'" class="btn !w-full !bg-rose-500"></Button>
+           </div>
 
         </div>
     </div>

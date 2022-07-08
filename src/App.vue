@@ -9,31 +9,19 @@ import CartModal from './components/CartModal.vue';
  export default {
   data(){
     return {
-      ischeckout : false,
+      ischeckout : true,
     }
   },
   watch : {
-      $route(to, from) {
-          // let checkoutpage = ['checkout.information', 'checkout.shipping', 'checkout.payment', 'order.confirmed'];
-         
-          // checkoutpage.forEach(page => {
-    
-          //   if(to.name == page){
-          //     this.ischeckout = true;
-          //   }
-          // })      
-   
-          this.ischeckout = to.name == 'checkout.information' || to.name == 'checkout.shipping'  || to.name == 'checkout.payment' || to.name == 'order.confirmed' ? true : false;  
+      $route(to, from) {  
+          this.ischeckout =  to.name == 'checkout' || to.name == 'checkout.information' || to.name == 'checkout.shipping'  || to.name == 'checkout.payment' || to.name == 'order.confirmed' ? true : false;  
       },
   },
-  components : { Header, Footer, CartModal}
-       
+  components : { Header, Footer, CartModal}       
  }
-
-
 </script>
 
-<template>   
+<template>  
     <Header v-if="!ischeckout"></Header>
     <router-view></router-view>
     <Footer  v-if="!ischeckout"></Footer>
