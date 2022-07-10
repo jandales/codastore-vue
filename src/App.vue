@@ -14,7 +14,7 @@ import CartModal from './components/CartModal.vue';
   },
   watch : {
       $route(to, from) {  
-          this.ischeckout =  to.name == 'checkout' || to.name == 'checkout.information' || to.name == 'checkout.shipping'  || to.name == 'checkout.payment' || to.name == 'order.confirmed' ? true : false;  
+          this.ischeckout =  to.name == 'checkout' || to.name == 'checkout.information' || to.name == 'checkout.shipping'  || to.name == 'checkout.payment' || to.name == 'order.confirmed' ? true : false;          
       },
   },
   components : { Header, Footer, CartModal}       

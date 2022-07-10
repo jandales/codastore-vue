@@ -5,6 +5,7 @@ export default {
 
     state : {
         user : null,
+        
     },
 
     getters : {
@@ -23,6 +24,10 @@ export default {
         async updateUser({commit}, params){
              await api.userUpdate(params);
             
+        },
+        async uploadImage({commit}, payload){        
+            const response = await api.uploadImage(payload)
+            commit('SET_USER',response.data)  
         }
     },
 

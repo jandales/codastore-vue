@@ -63,7 +63,8 @@
 
            
         },
-        components : { Item }
+        components : { Item },
+        
     
    
        
@@ -71,10 +72,12 @@
     }
 </script>
 <template>
-
-    <loading v-model:active="isLoading"               
+    <div class="relative">
+         <loading v-model:active="isLoading"               
                  :is-full-page="true"/>
 
+    </div>
+   
   <div v-if="!isLoading">
      <div class="block py-14">
          <h1 class="block text-left text-xl uppercase">{{collectionName == 'all' || null ? 'All Collection' : collectionName }}</h1>           

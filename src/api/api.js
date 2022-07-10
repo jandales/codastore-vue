@@ -156,7 +156,14 @@ export default {
     },
     sendMessage(body){
         return axios.post('/contact/send-message', body);
+    },
+    uploadImage(body){      
+        return axios.post('/user/upload', body,{
+            headers : { 'Content-Type': 'multipart/form-data' }
+        });
     }
+
+
 
     
 

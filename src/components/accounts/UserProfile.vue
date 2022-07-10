@@ -1,11 +1,13 @@
 <script>
     import AlertSuccess from '../alert/AlertSuccess.vue';
-  
+    import ModalImageUpload from './ModalImageUpload.vue';
     export default {
     data() {
         return {           
             errors : [], 
-            isSuccess : false,          
+            isSuccess : false, 
+            isShow: false, 
+            avatar : null,        
         };
     },
     methods: {        
@@ -18,6 +20,17 @@
             } catch (error) {
                 this.errors = error.response.data.errors;
             }
+        },
+        showModal(){
+                this.isShow = this.isShow == true ? false : true;           
+        },
+        onChangeFile(event){   
+            this.isShow = false;        
+            this.avatar = event.target.files[0];      
+            let formData = new FormData();              
+            formData.append('avatar', this.avatar); 
+            this.$store.dispatch('uploadImage', formData);
+        
         },
         onDateChange(event){                 
            this.user.age = this.calculateAge(event.target.value);
@@ -37,12 +50,12 @@
             return this.$store.getters.user;
         }
     },
-    components: { AlertSuccess }
+    components: { AlertSuccess, ModalImageUpload  }
 }
 </script>
 
 <template>
-   <AlertSuccess v-if="isSuccess" :alert="'danger'" :message="'Successfully Updated'" ></AlertSuccess> 
+    <AlertSuccess v-if="isSuccess" :alert="'danger'" :message="'Successfully Updated'" ></AlertSuccess> 
     <div class="w-full flex gap-8 mb-16" v-if="user">
         <div class="w-4/5">           
              <form @submit.prevent="updateProfile">
@@ -88,14 +101,19 @@
          <div class="flex flex-col w-1/5">
             <div class="relative h-50 w-50">
                     <img :src="baseApi+user.imagePath"  class="w-full h-full rounded-full" alt=""/>                 
-                    <span class="absolute bg-white border rounded-full p-2 bottom-2 right-2 z-10">
+                    <span @click="showModal" class="absolute bg-white border rounded-full p-2 bottom-2 left-2 z-10">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                     </span>                                    
             </div>
+            <ul class="bg-white w-max border mt-2 shadow-lg hidden" :class="{'!block' : isShow}">
+                <li class="px-2 py-1 cursor-pointer"><label><input @change="onChangeFile($event)" class="hidden" type="file" name="" id="">Upload a photo</label></li>
+                <li class="px-2 py-1 cursor-pointer"><span>Remove photo</span></li>
+            </ul>
         </div> 
 
     </div>
+    <ModalImageUpload :show="showModal"></ModalImageUpload>
 </template>

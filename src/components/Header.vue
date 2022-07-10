@@ -13,7 +13,7 @@ export default {
                 { name: "about", url: "/about" },
             ],
             isSearchOpen : false,
-            isHomePage : true, 
+            isHomePage : false, 
             isMenuOpen : false, 
         };
     },

@@ -14,16 +14,26 @@
                     this.$store.dispatch('isLoading', false); 
                 } 
             }
-        } ,      
+        } , 
+    created() {
+        this.$store.dispatch('user'); 
+    },
+    computed : {
+        user(){
+            return this.$store.getters.user;
+        }
+    },     
     }
 </script>
+
+
 <template>
     <div class="container min-h-[calc(100vh_-_100px)] md:mx-auto">
         <div class="flex flex-col  md:flex-row gap-8 md:gap-0 md:mt-8">           
             <div class="account-sidebar h-max">
                 <div class="hidden md:flex gap-4 px-4 py-4">
                     <div class="relative rounded-full w-16 h-16 bg-[#f5f5f5] overflow-hidden">
-                        <img src="../assets/avatar.jpg" alt="">
+                        <img :src="baseApi+user.imagePath"  alt="">
                     </div>
                     <div class="flex flex-col  justify-center">
                         <label for="" class="font-semibold tracking-widest">Jesus Andales</label>
