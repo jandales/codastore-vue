@@ -1,5 +1,6 @@
 <script>
 import Button from '../components/forms/Button.vue'
+
 import currency from '../libraries/currency'
     export default {
         data(){
@@ -81,7 +82,6 @@ import currency from '../libraries/currency'
     }
 </script>
 <template>
-
    <div class="w-full min-h-screen bg-white">
      <div class="container md:mx-auto md:px-16">
           <div class="flex">
@@ -154,4 +154,5 @@ import currency from '../libraries/currency'
        </div>
      </div>
    </div>
+
 </template>

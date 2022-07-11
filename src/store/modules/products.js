@@ -51,7 +51,11 @@ export default {
        async getFearureProducts({commit}, payload) {
             const  response  = await api.getFeaturePorducts(payload);         
             commit('SET_PRODUCTS', response.data);
-       }       
+       } ,
+        async searchProducts({ commit }, body ){         
+            const  response  = await api.productSearch(body);         
+            commit('SET_PRODUCTS', response.data.products);          
+        },     
     },
     
 }

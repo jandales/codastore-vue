@@ -25,6 +25,9 @@ export default {
         
         return axios.get(api);
     },
+    productSearch(payload){
+        return axios.post('/products/search', payload);
+    },
     getProduct(slug){
      
         return axios.get(`/products/${slug}`);
@@ -161,7 +164,11 @@ export default {
         return axios.post('/user/upload', body,{
             headers : { 'Content-Type': 'multipart/form-data' }
         });
+    },
+    removeImage(){      
+        return axios.delete('/user/remove-image');        
     }
+
 
 
 

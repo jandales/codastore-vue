@@ -27,6 +27,7 @@ import Information from '../components/checkout/Information.vue'
 import Shipping from '../components/checkout/Shipping.vue'
 import Payment from '../components/checkout/Payment.vue'
 import Completed from '../components/checkout/Completed.vue'
+import Search from '../views/Search.vue'
 
 import middleware  from './middleware'
 
@@ -59,6 +60,14 @@ const router = createRouter({
             name : 'shop.collection.sort',
 
             component : Shop,
+        },
+
+        {
+            path : '/search/keyword=:keyword',
+
+            name : 'search',
+
+            component : Search,
         },
 
 
@@ -164,7 +173,7 @@ const router = createRouter({
 
             children : [
 
-                { path : '',  component: Dashboard },
+                { path : '', name : 'dashabaord', component: Dashboard },
 
                 { path : 'profile', component: UserProfile },
 

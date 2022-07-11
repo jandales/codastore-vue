@@ -123,9 +123,7 @@
 </script>
 <template>  
     <div class="container-min-height">
-        <loading v-model:active="isLoading"
-                 :can-cancel="true"
-                 :on-cancel="onCancel"
+        <loading v-model:active="isLoading"                
                  :is-full-page="true"/>
 
         <div class="container md:m-auto" v-if="!isLoading">

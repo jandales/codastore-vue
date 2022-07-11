@@ -1,6 +1,7 @@
 <script>
     import currency from '../libraries/currency'
     import Item from './Item.vue';
+    import Pagination from './Pagination.vue';
  
 
 
@@ -34,6 +35,9 @@
                  this.optionsSelected = sort;            
                  this.$router.push(`/shop/collection/${name}/sort-by=${sort}`)
             }, 
+            page(a, b,link){
+                console.log(link);
+            }
         },
         
         mounted() {        
@@ -63,7 +67,7 @@
 
            
         },
-        components : { Item },
+        components : { Item, Pagination },
         
     
    
@@ -107,11 +111,23 @@
             <Item v-for="item in products" :product="item"></Item> 
         </div>
    </div>
-   <div class="flex gap-2 justify-center mb-8">
-        <button v-for="(link, index) in links" :key="index"  @click="getProducts(null, null, link.url)"   class="px-3 py-1 border text-sm bg-lightGray border-[#333] cursor-pointer hover:bg-dark hover:text-white" :class="{'bg-dark text-white' : link.active}">            
+   
+   <Pagination :links="links" v-on:page="getProducts"></Pagination>
+   <!-- <div class="flex items-center gap-2 justify-center mb-8">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+        </span>
+        <span v-for="(link, index) in links" :key="index"  @click="getProducts(null, null, link.url)"   class="px-3 py-1  text-sm  cursor-pointer  hover:text-dark" :class="{'text-dark font-bold' : link.active}">            
             {{ link.label }}
-        </button>     
-   </div>
+        </span>  
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+        </span>   
+   </div> -->
   </div>
 
 </template>

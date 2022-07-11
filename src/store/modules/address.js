@@ -7,6 +7,7 @@ export default {
     },
     getters : {
         addresses : state => { return state.addresses },
+        addresses_count : state => { return state.addresses.length} ,   
         address :  state => { return state.address }
     },
     mutations :{
@@ -33,7 +34,9 @@ export default {
         },
 
         async setDefaulAddress({commit}, payload){
-             await api.setDefaultAddress(payload);                     
+             const response = await api.setDefaultAddress(payload);  
+             commit('SET_ADDRESS', response.data);   
+             return response;                
         },
 
         async getDefaultAddress({commit}){

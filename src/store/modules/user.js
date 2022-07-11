@@ -28,6 +28,10 @@ export default {
         async uploadImage({commit}, payload){        
             const response = await api.uploadImage(payload)
             commit('SET_USER',response.data)  
+        },
+        async removeImage({commit}){        
+            const response = await api.removeImage()
+            commit('SET_USER',response.data)  
         }
     },
 

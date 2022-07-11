@@ -52,7 +52,11 @@ export default {
         },
         updateShippingMethod({commit},data){
            commit('SET_METHOD', data)
+        },
+        updateShippingAddress({commit}, data){
+            commit('SET_SHIPPING', data);
         }
+        
 
     },
 }

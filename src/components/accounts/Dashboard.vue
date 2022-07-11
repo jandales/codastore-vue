@@ -10,6 +10,17 @@
             } finally {
                  this.$store.dispatch('isLoading', false); 
             }
+         },
+       isEmpty(obj) {
+         for(var prop in obj) {
+            if(obj.hasOwnProperty(prop))
+                  return false;
+         }
+
+    return true;
+},
+         isEmptyObject(obj){
+            return JSON.stringify(obj) === '{}'
          }
       },
       created(){
@@ -19,7 +30,7 @@
          user(){
             return this.$store.getters.user;
          },         
-         address(){
+         address(){            
             return this.$store.getters.address;
          },
          option(){
@@ -34,12 +45,10 @@
 <template>
     <div class="flex gap-8">
 
-        <loading v-model:active="this.$store.getters.isLoading"
-                 :can-cancel="true"
-                 :on-cancel="onCancel"
+        <loading v-model:active="this.$store.getters.isLoading"                
                  :is-full-page="false"/>
-
-         <div v-if="option"  class="flex flex-col w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray   py-2 px-4">  
+  
+         <div v-if="!isEmpty(user)"  class="flex flex-col w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray   py-2 px-4">  
          
             <div class="flex items-center gap-2 mb-2">             
                <label for="" class="capitalize font-semibold">Personal Profile</label>
@@ -63,8 +72,8 @@
             </div>
 
         </div>
-         
-        <div v-if="option" class="flex flex-col w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray   py-2 px-4"> 
+      
+        <div v-if="!isEmpty(address)" class="flex flex-col w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray   py-2 px-4"> 
 
             <div class="flex items-center gap-2 mb-2">             
                <label for="" class="capitalize font-semibold">Default Shipping Address</label>
@@ -92,7 +101,7 @@
 
         </div>
 
-        <div v-if="option" class="w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray  py-2 px-4"> 
+        <div v-if="!isEmpty(option)" class="w-full md:w-[calc(((100%_+_1rem)_/_3)_-_1rem)] border bg-lightGray  py-2 px-4"> 
 
              <div class="flex items-center gap-2 mb-2">             
                <label for="" class="capitalize font-semibold">Default Payment Card</label>

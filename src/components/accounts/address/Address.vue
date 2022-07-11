@@ -1,7 +1,5 @@
 <template>
- <loading v-model:active="this.$store.getters.isLoading"
-                    :can-cancel="true"
-                    :on-cancel="onCancel"
+ <loading v-model:active="this.$store.getters.isLoading"                
                     :is-full-page="true"/>
     <div class="flex justify-between items-center mb-4">
         <h1 class="block tracking-widest font-bold">Address</h1>

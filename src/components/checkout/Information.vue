@@ -1,14 +1,16 @@
 <script>
 import SmallAlert from '../alert/smallAlert.vue';
+import ShippingModal from '../../components/modal/ShippingModal.vue'
 export default {
     data(){
         return {
             errors : [],
+            showModal : false,
         }
     },
     methods : {
         async getInformation(){
-              this.$store.dispatch('isLoading', true); 
+              this.$store.dispatch('isLoading', true);               
            try {
                 await this.$store.dispatch('checkoutInformation');
            } finally  {
@@ -39,9 +41,13 @@ export default {
                 }  
            }
         },
+        toggleModal(){
+            this.showModal = this.showModal == true ? false : true;             
+        }
     },
     created() {
         this.getInformation();
+        this.$store.dispatch('getAddresses');
     },
     computed :{
         isAuth(){              
@@ -53,16 +59,16 @@ export default {
         shipping(){
             return this.$store.getters.shipping;
         },
+        addresses_count(){
+            return this.$store.getters.addresses_count;
+        }
        
     },
-    components : { SmallAlert }
+    components : { SmallAlert, ShippingModal }
 }
 </script>
 <template>
-
-     <loading v-model:active="this.$store.getters.isLoading"
-                    :can-cancel="false"
-                    :on-cancel="onCancel"
+     <loading v-model:active="this.$store.getters.isLoading"                  
                     :is-full-page="true"/>
     <form v-if="shipping">
                    <div class="flex items-center mb-4">
@@ -75,7 +81,7 @@ export default {
                 </div> 
                 <div class="flex items-center mt-2 mb-4">
                     <h1 class="capitalize text-lg tracking-wider">Shipping Address</h1>              
-                    <label v-if="!isAuth"  class="block ml-auto" >Already have an account? <router-link to="/login">Log in</router-link></label>
+                    <span v-if="addresses_count > 1" @click="toggleModal" class="block ml-auto text-cyan-500 cursor-pointer hover:underline">Change</span>
                 </div>
 
                 <div class="block mb-4">
@@ -129,4 +135,5 @@ export default {
         
         <button  @click="continueToShipping" to="/fasf" class="block btn ml-auto">Continue</button>
     </div>
+    <ShippingModal :isOpen="showModal"  v-on:close="toggleModal" ></ShippingModal>
 </template>
