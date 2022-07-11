@@ -7,7 +7,7 @@ export default {
     },
     getters : {
         paymentCards : state => { return state.paymentCards },
-
+        paymentOptions_count : state => { return state.paymentCards.length} ,  
         card  :  state => { return state.card }
     },
     mutations :{
@@ -40,18 +40,21 @@ export default {
         },
 
         async setDefaulCard({commit}, payload){
-             await api.setDefaultPaymentCard(payload);                     
+             const response = await api.setDefaultPaymentCard(payload); 
+             return  response;          
         },
 
         async updateCard({commit}, params){         
             const response = await api.updatePaymentOptions(params.id, params.card)
             commit('SET_CARD', response.data); 
             return response;
-        },
+        },  
 
         async addCard({commit}, params){         
             await api.storePaymentCard(params);          
         }
+
+    
 
 
 

@@ -16,6 +16,9 @@ export default {
         },
         activeShippingMethod: state => {
             return state.activeShippingMethod;
+        },
+        paymentCard : state => {
+            return state.card;
         }
     },
     mutations : {
@@ -27,6 +30,9 @@ export default {
         },
         SET_METHOD(state, data) {           
             state.activeShippingMethod = data;
+        },
+        SET_PAYMENTCARD(state, data){
+            state.card = data;
         }
     },
     actions: {
@@ -50,11 +56,19 @@ export default {
         async placeOrder({commit}, body){
             return await api.placeOrder(body);
         },
+        async getCheckoutPaymentCard({commit}){
+            const repsonse = await api.getDefaultPaymentOption();
+            commit('SET_PAYMENTCARD', repsonse.data);  
+        },
+
         updateShippingMethod({commit},data){
            commit('SET_METHOD', data)
         },
         updateShippingAddress({commit}, data){
             commit('SET_SHIPPING', data);
+        },
+        changePaymentCard({commit}, data){
+            commit('SET_PAYMENTCARD', data)
         }
         
 

@@ -1,19 +1,21 @@
 <script>
 import SmallAlert from '../alert/smallAlert.vue';
 import Heading from './Heading.vue';
+import PaymentOptionModal from '../modal/PaymentOptionModal.vue';
 
 export default {
     data() {
         return {
             errors : [],
             model : null,
+            showModal : false,
         }
     },
     methods : { 
         async getCard(){
             this.$store.dispatch('isLoading', true)
             try {
-                await this.$store.dispatch('getDefaultPaymentCard');
+                await this.$store.dispatch('getCheckoutPaymentCard');
             } finally {
                  this.$store.dispatch('isLoading', false)
             }
@@ -41,21 +43,30 @@ export default {
                 this.$store.dispatch('isLoading', false)
             }
            
-        },       
+        }, 
+        toggleModal(){
+            this.showModal = this.showModal == true ? false : true;             
+        }      
     },
     created() {  
        this.getCard();
+       this.$store.dispatch('getPaymentCards');
     },
     computed : { 
         card() {              
-            return this.$store.getters.card;
-        },  
+            return this.$store.getters.paymentCard;
+        },
+        paymentOptions_count(){
+            return this.$store.getters.paymentOptions_count;
+        }
+          
     },
-    components : {  SmallAlert,  Heading } 
+    components : { SmallAlert, Heading, PaymentOptionModal } 
 }
 
 </script>
 <template>
+
    <loading v-model:active="this.$store.getters.isLoading"
                     :can-cancel="false"
                     :on-cancel="onCancel"
@@ -67,7 +78,7 @@ export default {
             <div class="credit-card mt-1 p-4 border">
                 <div class="flex justify-between mb-4">
                   <span class="block mt10">All Transactiion are secure and encrypted</span>
-                    <span id="payment-option-change"  class="ml-auto text-cyan-500 cursor-pointer hover:underline">Change</span>       
+                    <span v-if="paymentOptions_count > 1" @click="toggleModal" id="payment-option-change"  class="ml-auto text-cyan-500 cursor-pointer hover:underline">Change</span>       
                 </div>
                 <div class="credit-card-body">                    
                     <div class="form-block mb-4">    
@@ -106,4 +117,5 @@ export default {
             <button @click="placeOrder" class="block btn ml-auto">Place Order</button>
         </div>
     </div>
+    <PaymentOptionModal :isOpen="showModal" v-on:close="toggleModal"></PaymentOptionModal>
 </template>
