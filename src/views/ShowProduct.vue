@@ -5,11 +5,25 @@
     import Variant from '../components/Variant.vue'
     import Button from '../components/forms/Button.vue';
     import currency from '../libraries/currency';
-
-
+    import ProductImageSplide from '../components/ProductImageSplide.vue'
 
     export default{
+    //  setup() {
+    //     const options = {
+    //     type   : 'loop',
+    //     gap   : '2rem',
+    //     perPage : 3,
+        
+    //     breakpoints : {
+    //             640 : {
+    //                 gap : '1rem',
+    //                 perPage : 2,
+    //             }
+    //     },
 
+    //     }
+    //      return { options };
+    // },
     data() {
         return { 
             isLoading : false,
@@ -87,6 +101,13 @@
         product(){      
             return  this.$store.getters.product;
         },
+        photos(){
+            let array = [ { id: 0, path : this.product.imagePath}];
+            this.product.photos.forEach(photo => {
+                array.push({id : photo.id, path : photo.path});
+            })          
+            return array;
+        },
         variants(){
             let array = [];
             this.product.attributes.forEach(attribute => {
@@ -118,7 +139,7 @@
             }
         }
     },
-    components: { ProductDescription, ProductReview, FeatureProduct, Variant, Button, },
+    components: { ProductDescription, ProductReview, FeatureProduct, Variant, Button, ProductImageSplide },
 }
 </script>
 <template>  
@@ -126,21 +147,24 @@
         <loading v-model:active="isLoading"                
                  :is-full-page="true"/>
 
+      
         <div class="container md:m-auto" v-if="!isLoading">
             <div class="w-full  p-4 mt-4 md:mt-16 md:p-0">
             <div class="flex flex-col md:flex-row">
                 <div class="w-full md:w-3/5">
                 <div class="block">
                         <div class="w-full flex">
-                            <ul class="flex flex-col gap-4">
+                            <!-- <ul class="flex flex-col gap-4">
                                 <li v-for="photo in product.photos" class="w-20">
                                     <img :src="baseApi+photo.path" class="w-full h-full aspect-square"  alt="">
                                 </li >                                                
-                            </ul>
-                            <figure class="ml-8 mb-4">
+                            </ul> -->
+                            <!-- <figure class="ml-8 mb-4">
                                 <img :src="baseApi+product.imagePath" class="w-full md:w-100 "  alt="">
-                            </figure>                            
-                        </div>                        
+                            </figure>   -->
+                             <ProductImageSplide :photos="photos"></ProductImageSplide>                          
+                        </div>  
+
                 </div>
                 </div>
                 <div class="w-full md:w-2/5 md:ml-8">
