@@ -7,23 +7,7 @@
     import currency from '../libraries/currency';
     import ProductImageSplide from '../components/ProductImageSplide.vue'
 
-    export default{
-    //  setup() {
-    //     const options = {
-    //     type   : 'loop',
-    //     gap   : '2rem',
-    //     perPage : 3,
-        
-    //     breakpoints : {
-    //             640 : {
-    //                 gap : '1rem',
-    //                 perPage : 2,
-    //             }
-    //     },
-
-    //     }
-    //      return { options };
-    // },
+    export default{   
     data() {
         return { 
             isLoading : false,

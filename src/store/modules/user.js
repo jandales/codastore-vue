@@ -32,7 +32,15 @@ export default {
         async removeImage({commit}){        
             const response = await api.removeImage()
             commit('SET_USER',response.data)  
-        }
+        },
+        async createUserCookie({commit}) {
+            await api.createCookie();
+        },
+        async getUserCookie({commit}) {
+            await api.getCookie();
+        },
+      
+
     },
 
     mutations : {

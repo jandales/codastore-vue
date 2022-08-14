@@ -167,7 +167,9 @@ export default {
     },
     removeImage(){      
         return axios.delete('/user/remove-image');        
-    }
+    },
+
+
 
 
 
