@@ -6,6 +6,8 @@
     export default{
     data() {
         return {
+            apiBase : 'http://127.0.0.1:8000',
+            product : null,
             is_review_selected: false,
             activeTabClass: "bg-[#f5f5f5]",
         };
@@ -15,31 +17,52 @@
             this.is_review_selected = state;
         }
     },
-    components: { ProductDescription, ProductReview, FeatureProduct }
+    created () {  
+
+         this.axios
+            .get(`http://127.0.0.1:8000/api/v1/products/${this.$route.params.item}`)
+            .then(response => {  
+                this.product = response.data.product;
+           
+            });
+    },
+    components: { ProductDescription, ProductReview, FeatureProduct },
+    computed : {
+        variants() {
+
+            let newArray = [];
+            this.product.attributes.forEach(attribute => {
+                 newArray.push({id : attribute.attribute_id, attributeName : attribute.attributes.name, items : [] });                   
+            }); 
+
+            newArray.forEach(attribute => {      
+                this.product.variants.forEach(variant => {  
+                    if (attribute.id == variant.attribute_id) {
+                        attribute.items.push(variant.name)  
+                    }           
+                })           
+            })  
+
+            return newArray;        
+        }
+    }
 }
 </script>
 <template>
+
     <div class="w-full md:w-[900px] mx-auto p-4 mt-4 md:mt-8 md:p-0">
          <div class="flex flex-col md:flex-row">
             <div class="w-full md:basis-6/12">
                <div class="block">
                      <div class="w-full md:w-[80%] flex flex-col">
                         <figure class="mb-4">
-                            <img src="../assets/img/collection1.webp" class="w-full md:w-100 "  alt="">
+                            <img :src="apiBase+product.imagePath" class="w-full md:w-100 "  alt="">
                         </figure>
                         <ul class="flex w-full  gap-4">
-                            <li class="w-[calc(((100%_+_1rem)_/_4)_-_1rem)]">
-                                <img src="../assets/img/collection1.webp" class="w-full h-full aspect-square"  alt="">
+                            <li v-for="photo in product.photos" class="w-[calc(((100%_+_1rem)_/_4)_-_1rem)]">
+                                <img :src="apiBase+photo.path" class="w-full h-full aspect-square"  alt="">
                             </li >
-                            <li class="w-[calc(((100%_+_1rem)_/_4)_-_1rem)]">
-                                <img src="../assets/img/collection2.webp" class="w-full h-full aspect-square"  alt="">
-                            </li>
-                            <li class="w-[calc(((100%_+_1rem)_/_4)_-_1rem)]">
-                                <img src="../assets/img/collection3.webp" class="w-full h-full aspect-square"  alt="">
-                            </li>
-                            <li class="w-[calc(((100%_+_1rem)_/_4)_-_1rem)]">
-                                <img src="../assets/img/collection1.webp" class="w-full h-full aspect-square"  alt="">
-                            </li>                      
+                                              
                          </ul>
                      </div>
                     
@@ -47,7 +70,7 @@
             </div>
             <div class="basis-6/12">
                 <div class="block">
-                    <h1 class="block text-theme font-semibold tracking-wildest mt-4 md:mt-0 mb-2">Product Name</h1>
+                    <h1 class="block text-theme font-semibold tracking-wildest mt-4 md:mt-0 mb-2">{{ product.name }}</h1>
                     <ul class="flex gap-2 mb-2">
                         <li><font-awesome-icon icon="fa-solid fa-star" color="#ff523b" /></li>
                         <li><font-awesome-icon icon="fa-regular fa-star"  color="#ff523b" /></li>
@@ -55,16 +78,15 @@
                         <li><font-awesome-icon icon="fa-regular fa-star"  color="#ff523b" /></li>
                         <li><font-awesome-icon icon="fa-regular fa-star"  color="#ff523b" /></li>
                     </ul>
-                    <span class="block mb-2 text-theme ">$50.00</span>
-                    <p class="block mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <span class="block mb-2 text-theme ">{{ product.regular_price }}</span>
+                    <p class="block mb-2">{{ product.short_description }}</p>
                     <ul class="mt-4">
-                        <li>
-                            <span class="block">Color :</span>
-                            <ul class="flex gap-2 mt-2">
-                                <li><span class="border border-gray-300 p-2 text-xs" >Red</span></li>
-                                <li><span class="border border-gray-300 p-2 text-xs" >Gray</span></li>
-                                <li><span class="border border-gray-300 p-2 text-xs" >BLue</span></li>
-                                <li><span class="border border-gray-300 p-2 text-xs" >Red</span></li>
+                        <li v-for="item in variants" class="mb-4">
+                            <span class="relative block capitalize mb-2">{{ item.attributeName}}:</span>
+                            <ul class="flex gap-2">
+                                <li v-for="variant in item.items">
+                                    <span class="border border-gray-300 p-2 text-xs capitalize">{{variant}}</span>
+                                </li>                               
                             </ul>
                         </li>                        
                     </ul>
@@ -93,7 +115,7 @@
                 <li class="ml-4"><span class="inline-block px-8 py-4 cursor-pointer" :class="[is_review_selected ? activeTabClass  : '' ]" @click="tabEvent(true)">Review(0)</span></li>
             </ul>
             <div id="tab-content" class="block bg-[#f5f5f5]">
-                <ProductDescription :class="[is_review_selected ? 'hidden'  : '' ]"></ProductDescription>
+                <ProductDescription :description="product.long_description" :class="[is_review_selected ? 'hidden'  : '' ]"></ProductDescription>
                 <ProductReview :class="[is_review_selected ? ''  : 'hidden' ]"></ProductReview>
             </div>
         </div>

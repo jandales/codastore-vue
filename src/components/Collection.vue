@@ -55,7 +55,8 @@ export default {
                                 class="object-cover full-width  duration-300"    alt=""/>
                             </figure>
                             <p class="text-right uppercase text-slate-500 text-sm md:text-base font-[700] tracking-widest  hover:underline">                                
-                                <a href="/shop" class="">Shop Now</a>
+                                <router-link :to="{name : 'shop.collection.name', params : { name : item.name} }" class="cursor-pointer">Shop Now</router-link>
+  
                             </p>
                            
                         </div> 
