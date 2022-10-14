@@ -1,18 +1,31 @@
-<script setup>
+<script>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+
 import Header from "./components/Header.vue";
 import Footer from './components/Footer.vue';
-import CartModal from './components/CartModal.vue';  
+import CartModal from './components/CartModal.vue'; 
 
+ export default {
+  data(){
+    return {
+      ischeckout : true,
+    }
+  },
+  watch : {
+      $route(to, from) {  
+          this.ischeckout =  to.name == 'checkout' || to.name == 'checkout.information' || to.name == 'checkout.shipping'  || to.name == 'checkout.payment' || to.name == 'order.confirmed' ? true : false;          
+      },
+  },
+  components : { Header, Footer, CartModal}       
+ }
 </script>
 
-<template>
-   
-        <Header></Header>
-        <router-view></router-view>
-        <Footer></Footer>
-        <CartModal></CartModal>
+<template>  
+    <Header v-if="!ischeckout"></Header>
+    <router-view></router-view>
+    <Footer  v-if="!ischeckout"></Footer>
+    <CartModal v-if="!ischeckout"></CartModal>
 </template>
 
 <style>
@@ -27,6 +40,7 @@ import CartModal from './components/CartModal.vue';
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: #f0f0f0;
 
 }
 </style>

@@ -5,9 +5,31 @@
 
 
 .splide{
-    padding-right: 0 !important;
-    padding-left: 0 !important;
+    padding: 0 !important;
 }
-.splide__pagination {
-    margin-top: 2rem !important;
+
+
+.splide__list{
+    flex-direction: column !important;
+    gap:1rem;
 }
+
+.splide__list img{
+   width: 100%;
+}
+
+@media screen and (max-width:768px) {
+    .splide__list{
+        flex-direction: row !important;
+        gap:0 !important;
+        margin-right:10px !important;
+    }
+
+    #thumbs{
+        visibility: hidden;
+        margin-top: 1rem;
+        order: 1;
+        height: 10px;
+    }
+}
+

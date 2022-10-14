@@ -1,5 +1,6 @@
 <script>
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
@@ -28,16 +29,20 @@ export default {
 
     return { options };
   },
-   mounted() {
-        this.axios
-            .get('http://127.0.0.1:8000/api/v1/collection')
-            .then(response => {  this.collection = response.data.collection });                                 
-    }
+   created() {
+         this.$store.dispatch('collection');                             
+   },
+   computed : {
+        collection(){
+            return this.$store.getters.collection;
+        }
+   }
 }
 
 </script>
 
 <template>
+
     <div class="container px-4 md:mx-auto lg:px-0">
         <div class="md:min-h-screen ">
          

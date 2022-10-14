@@ -1,22 +1,26 @@
 <script>
+    import { mapGetters } from 'vuex';
+    import Item from './Item.vue';
     export default {
         data() {
             return {
-                apiBase : 'http://127.0.0.1:8000', 
-                products : [],
+              
             }
         },            
         mounted() {
-                this.axios
-                .get('http://127.0.0.1:8000/api/v1/products/featured/limit=12')
-                .then(response => {  this.products = response.data });                                 
-        }
+           this.$store.dispatch('getFearureProducts', 12);                                
+        },
+        computed : {
+            ...mapGetters(['products'])
+        },
+        components : { Item }
     }
 </script>
 <template>
     <div class="container px-4 md:mx-auto lg:px-0">
     <div class="block text-center">               
             <h1 class="page-heading text-left">Featured Product</h1>
+<<<<<<< HEAD
         <div class="flex flex-wrap gap-4">        
             <div v-for="(item, index)  in products" class="product-width box-border">
                <router-link :to="{ name: 'collections-item', params: { item : item.slug }}">
@@ -35,10 +39,16 @@
                     </div>
                </router-link>
             </div>           
+=======
+        <div class="flex flex-wrap gap-4">    
+
+            <Item v-for="(item, index)  in products" :product="item"></Item>
+                 
+>>>>>>> ee8800ffcfde0e6afc9c33bc7bbb1edba5467f2a
         </div>
 
         <div class="p-8  md:mb-12">
-             <a href="#" class=" inline-block  py-2 px-8 bg-black text-white tracking-widest"> View All</a>
+             <router-link to="/shop/collection/all" class=" inline-block  py-2 px-8 bg-black text-white tracking-widest"> View All</router-link>
         </div>
        
     </div>
